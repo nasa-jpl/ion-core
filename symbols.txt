@@ -1,0 +1,78 @@
+../ion-open-source-4.1.2/bpv7/library/libbp.c:837:void  bp_interrupt(BpSAP sap) 
+../ion-open-source-4.1.2/ici/library/platform.c:1630:void       _putErrmsg(const char *fileName, int lineNbr, const char *text,
+../ion-open-source-4.1.2/ici/library/zco.c:2812:vast    zco_source_data_length(Sdr sdr, Object zcoObj) 
+../ion-open-source-4.1.2/ici/sdr/sdrxn.c:1798:int       sdr_begin_xn(Sdr sdrv)  
+../ion-open-source-4.1.2/ici/sdr/sdrmgt.c:811:Object    Sdr_malloc(const char *file, int line, Sdr sdrv, size_t nbytes) 
+../ion-open-source-4.1.2/ici/library/ion.c:2324:Object  ionCreateZco(ZcoMedium source, Object location, vast offset,  
+../ion-open-source-4.1.2/bpv7/library/libbpP.c:1848:int bpAttach()
+../ion-open-source-4.1.2/ici/library/platform_sm.c:2112:int     sm_TaskExists(int task) 
+../ion-open-source-4.1.2/ici/sdr/sdrlist.c:223:Object   Sdr_list_insert_last(const char *file, int line, Sdr sdrv, Object list,
+../ion-open-source-4.1.2/ici/sdr/sdrcatlg.c:151:Object  sdr_find(Sdr sdrv, char *name, int *type)
+../ion-open-source-4.1.2/ici/bulk/STUB_BULK/bulk.c:111:void     bulk_destroy(unsigned long item) 
+../ion-open-source-4.1.2/ici/library/smlist.c:610:PsmAddress    sm_list_first(PsmPartition partition, PsmAddress list) 
+../ion-open-source-4.1.2/ici/library/psm.c:379:void    *psp(PsmPartition partition, PsmAddress address) 
+../ion-open-source-4.1.2/ici/library/memmgr.c:351:void  memmgr_destroy(uaddr smId, PsmPartition *partition) 
+../ion-open-source-4.1.2/ici/library/lyst.c:159:Lyst_clear(const char *file, int line, Lyst list)
+../ion-open-source-4.1.2/ici/library/sptrace.c:333:void sptrace_log_memo(PsmPartition trace, uaddr addr, char *text,
+../ion-open-source-4.1.2/ici/library/smrbt.c:93:PsmAddress      Sm_rbt_create(const char *file, int line, 
+../ion-open-source-4.1.2/ici/library/rfx.c:236:void     rfx_erase_data(PsmPartition partition, PsmAddress nodeData,
+../ion-open-source-4.1.2/ici/sdr/sdrstring.c:117:int    sdr_string_read(Sdr sdrv, char *into, Object string) 
+../ion-open-source-4.1.2/ici/sdr/sdrhash.c:26:Object    Sdr_hash_create(const char *file, int line, Sdr sdrv, int keyLength,
+../ion-open-source-4.1.2/ici/library/ionsec.c:325:int   secAttach() 
+../ion-open-source-4.1.2/bpv7/bpsec/policy/bpsec_policy.c:55:int bsl_all_init(PsmPartition partition)
+../ion-open-source-4.1.2/bpv7/bpsec/instr/bpsec_instr.c:1130:int bpsec_instr_init() 
+../ion-open-source-4.1.2/bpv7/library/bei.c:326:void    destroyExtensionBlocks(Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/imc/libimcfw.c:472:int    imcSendPetition(ImcPetition *petition, uint32_t toRegion)
+../ion-open-source-4.1.2/bpv6/library/eureka.c:737:PsmAddress   bp_find_discovery(char *eid) 
+../ion-open-source-4.1.2/ici/library/cbor.c:733:int     cbor_decode_array_open(uvast *size, unsigned char **cursor,
+../ion-open-source-4.1.2/ici/library/crc.c:427:uint16_t ion_CRC16_1021_X25(const char *data, uint32_t dLen, uint16_t crc)
+../ion-open-source-4.1.2/bpv7/library/ext/bpsec/bcb.c:216:int    bpsec_decrypt(AcqWorkArea *work)
+../ion-open-source-4.1.2/bpv7/library/ext/bpsec/bib.c:219:int bpsec_verify(AcqWorkArea *work)
+../ion-open-source-4.1.2/bpv7/bibe/bibe.c:498:int       bibeHandleBpdu(BpDelivery *dlv)
+../ion-open-source-4.1.2/bpv7/saga/saga.c:729:int       saga_receive(BpDelivery *dlv, unsigned char *cursor,
+../ion-open-source-4.1.2/ici/sdr/sdrtable.c:37:Object   Sdr_table_create(const char *file, int line, Sdr sdrv, int rowSize,
+../ion-open-source-4.1.2/ici/library/radix.c:204:PsmAddress radix_find(PsmPartition partition, PsmAddress radixAddr, char *key, int wildcard)
+../ion-open-source-4.1.2/bpv7/bpsec/policy/bpsec_policy_eventset.c:685:int bsles_sdr_restore(PsmPartition wm, BpSecPolicyDbEntry entry) 
+../ion-open-source-4.1.2/bpv7/bpsec/policy/bpsec_policy_rule.c:1847:int bslpol_sdr_rule_restore(PsmPartition wm, BpSecPolicyDbEntry entry)
+../ion-open-source-4.1.2/bpv7/bpsec/utils/bpsec_util.c:837:Object bspsec_util_findOutboundBpsecTargetBlock(Bundle *bundle, int tgtBlkNum, BpBlockType sopType)
+../ion-open-source-4.1.2/bpv7/bpsec/utils/bpsec_asb.c:660:void bpsec_asb_inboundTargetResultRemove(LystElt tgtResultElt, LystElt secBlkElt)
+../ion-open-source-4.1.2/bpv7/library/ext/pnb/pnb.c:16:int      pnb_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/library/ext/bpq/bpq.c:16:int      qos_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/library/ext/meb/meb.c:16:int      meb_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/library/ext/bae/bae.c:16:int      bae_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/library/ext/hcb/hcb.c:20:int      hcb_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/library/ext/snw/snw.c:16:int      snw_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/library/ext/imc/imc.c:16:int      imc_offer(ExtensionBlock *blk, Bundle *bundle)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sci.c:162:int bpsec_sci_defFind(int sci_id, sc_Def *def)
+../ion-open-source-4.1.2/bpv7/bpsec/policy/bpsec_policy_event.c:346:Address bslevt_sdr_restore(BpSecEvent *event, char *cursor, int *bytes_left)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sc_value.c:1017: Lyst bpsec_scv_sdrListRead(Sdr sdr, Object sdr_list)
+../ion-open-source-4.1.2/ici/crypto/NULL_SUITES/csi.c:1085:csi_val_t csi_crypt_update(csi_csid_t suite, void *context, csi_svcid_t svc, csi_val_t data)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sci_valmap.c:151:int bpsec_scvm_byNameIdxFind(sc_value_map map[], char *name)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sc_util.c:275:char *bpsec_scutl_strFromStrsCreate(char **array, int size, int num_items)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/ion_test_sc.c:809:int   bpsec_itsci_initAsbFn(void *def, Bundle *bundle, BpsecOutboundASB *asb, Sdr sdr, PsmPartition wm, PsmAddress parms)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/bib_hmac_sha2_sc.c:238:int bpsec_bhssci_procOutBlk(sc_state *state, Lyst extraParms, Bundle *bundle, 
+../ion-open-source-4.1.2/bpv7/bpsec/sci/bcb_aes_gcm_sc.c:655:int bpsec_bagsci_procOutBlk(sc_state *state, Lyst extraParms, Bundle *bundle, BpsecOutboundASB *asb, BpsecOutboundTargetResult *tgtResult)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/rfc9173_utils.c:687:uint16_t bpsec_rfc9173utl_intParmGet(sc_state *state, int id, uint16_t defVal)
+../ion-open-source-4.1.2/ici/library/platform_sm.c:2122:void    *sm_TaskVar(void **arg)
+../ion-open-source-4.1.2/ici/library/platform.c:3257:void       isignal(int signbr, void (*handler)(int))
+../ion-open-source-4.1.2/bpv7/library/libbp.c:837:void  bp_interrupt(BpSAP sap)
+../ion-open-source-4.1.2/ici/library/ion.c:2034:void    ionPauseAttendant(ReqAttendant *attendant)
+../ion-open-source-4.1.2/ici/library/psm.c:1131:PsmAddress      Psm_zalloc(const char *file, int line, PsmPartition partition,
+../ion-open-source-4.1.2/ici/library/smlist.c:84:PsmAddress     Sm_list_create(const char *fileName, int lineNbr,
+
+../ion-open-source-4.1.2/bpv7/bpsec/utils/bpsec_asb.c:660:void bpsec_asb_inboundTargetResultRemove(LystElt tgtResultElt, LystElt secBlkElt)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sc_value.c:1017: Lyst bpsec_scv_sdrListRead(Sdr sdr, Object sdr_list)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sci_valmap.c:151:int bpsec_scvm_byNameIdxFind(sc_value_map map[], char *name)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/sc_util.c:275:char *bpsec_scutl_strFromStrsCreate(char **array, int size, int num_items) 
+../ion-open-source-4.1.2/bpv7/bpsec/sci/ion_test_sc.c:809:int   bpsec_itsci_initAsbFn(void *def, Bundle *bundle, BpsecOutboundASB *asb, Sdr sdr, PsmPartition wm, PsmAddress parms)
+../ion-open-source-4.1.2/bpv7/bpsec/sci/bib_hmac_sha2_sc.c:238:int bpsec_bhssci_procOutBlk(sc_state *state, Lyst extraParms, Bundle *bundle,
+../ion-open-source-4.1.2/bpv7/bpsec/sci/bcb_aes_gcm_sc.c:655:int bpsec_bagsci_procOutBlk(sc_state *state, Lyst extraParms, Bundle *bundle, BpsecOutboundASB *asb, BpsecOutboundTargetResult *tgtResult) 
+../ion-open-source-4.1.2/bpv7/bpsec/sci/rfc9173_utils.c:687:uint16_t bpsec_rfc9173utl_intParmGet(sc_state *state, int id, uint16_t defVal)
+
+
+
+
+
+
+
+
