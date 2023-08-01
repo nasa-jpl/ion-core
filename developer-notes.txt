@@ -1,0 +1,15 @@
+8/1/2023
+
+Notes to developers on Gitlab.
+
+For open source development - general improvement and official updates to match with each ION release - you can develop it on Gitlab. 
+
+Main line of code is called "current" or whatever.
+
+Development and testing should be done in separate branches called "update-x.y.z-<description>" where x.y.z matches the target ION open source version.
+
+Prior to release, all branches will be merged into a "integration-x.y.z" branch for testing. 
+
+Once integration and testing is complete, we merge integration-x.y.z back to current and tag that release point as "x.y.z" 
+
+If you are using ion-core for a specific project/mission, then you will fork a copy of ion-core (at whatever tag that is appropriate) and host that either in a separate git repo. If you have general improvement suggestion, please place your update in a separate update branch and it will be reviewed.
