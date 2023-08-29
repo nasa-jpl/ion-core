@@ -5,7 +5,7 @@ b=$(echo $2 | cut --delimiter='.' -f 4);
 time=86400
 
 echo "## begin ionadmin" > host$a.rc
-echo "1 $a ''" >> host$a.rc
+echo "1 $a 'host.ionconfig'" >> host$a.rc
 echo "s" >> host$a.rc
 echo  >> host$a.rc
 
