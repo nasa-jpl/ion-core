@@ -82,3 +82,7 @@ with
 `1 192 host.ionconfig`
 
 This tells ION to read the host.config file to obtain the proper memory allocation and configuraiton.
+
+## Contributing Code
+
+* Please see the file `developer_notes.txt` for more information.
