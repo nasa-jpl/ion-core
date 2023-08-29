@@ -1,15 +1,18 @@
 ## ION-Core for Windows and Linux
 
-After some Windows 10 updates, WSL2 has no network connection... downgrade:
+### WSL2 Networking Issue
+
+WLS2 is known to have issues with VPN connection. One approach is to downgrade to WSL1:
+
 In Windows Powershell get your name/version:
 > wsl -l -v
 
 Set it to version 1:
 > wsl --set-version Ubuntu-22.04 1"
 
-Yeah, so after some Googling this seems to be an issue with WSL2 and some unknown versions of Windows 10. Geez. Just downgrade.
+Alternative approach is to use the WSL vpnkit to provide VPN connection: https://github.com/sakai135/wsl-vpnkit
 
-## To build:
+### To build:
 
 Be sure you have the tools installed:
 > sudo apt update
@@ -24,9 +27,9 @@ Get the ion sources:
 
 Get the ION-Core repo:
 
-> git clone https://github.jpl.nasa.gov/PTL/ION-Core.git
+> git clone https://github.com/nasa-jpl/ion-core.git
 >
-> cd ION-Core
+> cd ion-core
 >
 > git checkout 4.1.2
 >
@@ -36,12 +39,13 @@ Get the ION-Core repo:
 >
 > make install
 
-## Want man pages?
+## Man Page Installation
+
 > ./scripts/make-man-pages.sh ../ion-open-source-4.1.2/
 
-## Make a host.rc file
+## Creating "host.rc" files for a two-node configuration
 
-> ./scripts/host.sh this IP that IP 
+> ./scripts/host.sh <IP-of-host1> <IP-of-host2> 
 
 For example:
 
