@@ -79,4 +79,4 @@ while [ "x${SOURCES[count]}" != "x" ]
 	count=$(( $count + 1 ))
 	done
 
-	/usr/bin/ld -r lib/*.o -o lib/lib.a
+	/usr/bin/ld -r lib/*.o -o lib/libioncore.a
