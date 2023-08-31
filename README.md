@@ -39,7 +39,7 @@ cd ion-core
 git checkout tags/4.1.2
 ./scripts/extract.sh ../ion-open-source-4.1.2
 make
-make install
+sudo make install
 ```
 
 ## Man Page Installation
