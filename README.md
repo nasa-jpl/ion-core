@@ -18,6 +18,8 @@ https://github.com/sakai135/wsl-vpnkit
 
 ### To build:
 
+Currently ion-core only builds on 64-bit OS. Future release will support 32-bit OS.
+
 Be sure you have the tools installed:
 ```
 sudo apt update
@@ -75,6 +77,9 @@ These values can be adjust to allocate sufficient storage to ION while imposing 
 
 Read the man page `man ionconfig` for detailed explanation of the configuration parameters.
 
+## building library
+
+To build ION library from ion-core, execute the command `./scripts/lib.sh`.
 ## Contributing Code
 
 * Please see the file `developer_notes.txt` for more information.
