@@ -34,7 +34,7 @@ Get the ION-Core repo:
 ```
 git clone https://github.com/nasa-jpl/ion-core.git
 cd ion-core
-git checkout 4.1.2
+git checkout tags/4.1.2
 ./scripts/extract.sh ../ion-open-source-4.1.2
 make
 make install
