@@ -188,6 +188,10 @@ install:
 clean:
 	@rm -f $(OUT_BIN)/* > /dev/null
 
+uninstall:
+	@rm -f $(INSTALL_PATH)/bin/*
+	@rm -f $(INSTALL_PATH)/man/*
+
 distclean:
 	@rm -f $(INC)/* > /dev/null
 	@rm -f $(SRC)/* > /dev/null
