@@ -21,7 +21,7 @@ export GCC = /usr/bin/gcc
 # Just locally:
 MAKE = /usr/bin/make -f
 
-.PHONY: all clean distclean install
+.PHONY: all clean distclean install install-man uninstall
 
 all:
 	$(MAKE) $(MDIR)/bping.mk
@@ -183,6 +183,8 @@ install:
 	cp -v $(OUT_BIN)/ionstart.awk $(INSTALL_PATH)/bin
 	cp -v $(OUT_BIN)/ionstop $(INSTALL_PATH)/bin
 	cp -v $(OUT_BIN)/killm $(INSTALL_PATH)/bin
+
+install-man:
 	cp -v $(MAN)/* $(INSTALL_PATH)/man
 
 clean:

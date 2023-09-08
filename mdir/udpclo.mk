@@ -1,6 +1,6 @@
 all:
 	$(GCC) $(CFLAG) \
-	$(SRC)/udpcli.c \
+	$(SRC)/udpclo.c \
 	$(SRC)/platform.c \
 	$(SRC)/ion.c \
 	$(SRC)/libbpP.c \
