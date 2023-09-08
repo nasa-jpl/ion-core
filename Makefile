@@ -186,7 +186,9 @@ install:
 	cp -v $(MAN)/* $(INSTALL_PATH)/man
 
 clean:
-	@rm -f $(OUT_BIN)/* > /dev/null
+# @rm -f $(OUT_BIN)/* > /dev/null
+# keep the ION scripts, distclean will wipe them
+	@find $(OUT_BIN) -type f ! -name 'ionstart' ! -name 'ionstart.awk' ! -name 'ionstop' ! -name 'killm' -exec rm -f {} +
 
 uninstall:
 	@rm -f $(INSTALL_PATH)/bin/*
