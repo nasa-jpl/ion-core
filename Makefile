@@ -185,7 +185,7 @@ install:
 	cp -v $(OUT_BIN)/killm $(INSTALL_PATH)/bin
 
 install-man:
-	cp -v $(MAN)/* $(INSTALL_PATH)/man
+	cp -v $(MAN)/* $(INSTALL_PATH)/man || true
 
 clean:
 # @rm -f $(OUT_BIN)/* > /dev/null
