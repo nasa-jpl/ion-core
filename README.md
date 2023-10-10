@@ -83,3 +83,25 @@ To build ION library from ion-core, execute the command `./scripts/lib.sh`.
 ## Contributing Code
 
 * Please see the file `developer_notes.txt` for more information.
+
+--------------------------
+
+## Release Notes
+
+Latest Release
+
+Tag: `4.1.2`
+
+10/09/2023
+
+* Based on ION Open Source 4.1.2
+* Initial public release of ion-core (prototype)
+* Basic features:
+  * BPv7
+  * CGR
+  * LTP
+  * UDPCL
+  * IPN Nameing Scheme
+  * Load-n-Go Command
+
+
