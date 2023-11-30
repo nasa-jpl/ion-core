@@ -44,7 +44,13 @@ sudo make install
 
 ## Man Page Installation
 
+First run: 
+
 `./scripts/make-man-pages.sh ../ion-open-source-4.1.2/`
+
+Then run:
+
+`sudo make man-install`
 
 ## Creating "host.rc" files for a two-node configuration
 
@@ -56,7 +62,7 @@ For example:
 
 Makes the config file host192.rc
 
-`ionstart -i host192.rc`
+`ionstart -I host192.rc`
 
 Now we can use it to launch host with IP of 192.168.254.192 and run bping, bpsource, bprecvfile etc. For the other host, do the same with reversed order of IP addresses.
 
@@ -80,6 +86,7 @@ Read the man page `man ionconfig` for detailed explanation of the configuration 
 ## building library
 
 To build ION library from ion-core, execute the command `./scripts/lib.sh`.
+
 ## Contributing Code
 
 * Please see the file `developer_notes.txt` for more information.
