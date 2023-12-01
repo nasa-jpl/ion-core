@@ -66,7 +66,7 @@ Makes the config file host192.rc
 
 Now we can use it to launch host with IP of 192.168.254.192 and run bping, bpsource, bprecvfile etc. For the other host, do the same with reversed order of IP addresses.
 
-### tuning ionconfig
+### Tuning Memory Allocation
 
 If you encounter ION error related to exhaustion of working memory or heap space, you can increase the preallocated memory by modifying the host.ionconfig file which is currently as follows:
 
@@ -83,7 +83,11 @@ These values can be adjust to allocate sufficient storage to ION while imposing 
 
 Read the man page `man ionconfig` for detailed explanation of the configuration parameters.
 
-## building library
+## Tuning LTP Performance
+
+Actual throughput of data transfer depends on the underlying network connection speed, the host's processor speed, the contact graph's data rate, the size of the bundles being sent, the round trip delay between the two hosts, and also on the LTP configuration. Check the ltprc manual page `man ltprc` for details on how to adjust LTP settings to maximize throughput. In the ION source code's root directory, there is an excel file named `ION-LTP-configuration_tool.xlsm` which may assit you in optimizing your LTP configuraiton to get the highest available throughput out of your system.
+
+## Building Library
 
 To build ION library from ion-core, execute the command `./scripts/lib.sh`.
 
@@ -99,7 +103,7 @@ Latest Release
 
 Tag: `4.1.2`
 
-10/09/2023
+11/30/2023
 
 * Based on ION Open Source 4.1.2
 * Initial public release of ion-core (prototype)
