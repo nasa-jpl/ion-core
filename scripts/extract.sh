@@ -145,6 +145,10 @@ SOURCES=(
 	$SOURCE_PATH/bpv7/bpsec/sci/rfc9173_utils.c
 	$SOURCE_PATH/bpv7/bpsec/utils/bpsec_asb.c
 
+    $SOURCE_PATH/bpv7/stcp/libstcpcla.c
+	$SOURCE_PATH/bpv7/stcp/stcpcli.c
+	$SOURCE_PATH/bpv7/stcp/stcpclo.c
+
 )
 HEADERS=(
 	$SOURCE_PATH/bpv7/library/ext/bpsec/bcb.h
@@ -251,6 +255,8 @@ HEADERS=(
 	$SOURCE_PATH/bpv7/bpsec/sci/bcb_aes_gcm_sc.h
 	$SOURCE_PATH/bpv7/bpsec/sci/rfc9173_utils.h
 	$SOURCE_PATH/bpv6/library/ext/sbsp/sbsp_util.h
+
+	$SOURCE_PATH/bpv7/stcp/stcpcla.h
 	)
 
 SCRIPTS=(

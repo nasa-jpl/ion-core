@@ -62,6 +62,8 @@ all:
 	$(MAKE) $(MDIR)/bpclm.mk
 	$(MAKE) $(MDIR)/ionrestart.mk
 	$(MAKE) $(MDIR)/bpchat.mk
+	$(MAKE) $(MDIR)/stcpcli.mk
+	$(MAKE) $(MDIR)/stcpclo.mk
 #
 bping:
 	$(MAKE) $(MDIR)/bping.mk
@@ -175,7 +177,13 @@ ionrestart:
 	$(MAKE) $(MDIR)/ionrestart.mk
 #
 bpchat:
-	$(MAKE) $(MDIR)/bpchat.mk	
+	$(MAKE) $(MDIR)/bpchat.mk
+#
+stcpcli:
+	$(MAKE) $(MDIR)/stcpcli.mk
+#
+stcpclo:
+	$(MAKE) $(MDIR)/stcpclo.mk
 					
 install:
 	cp -v $(OUT_BIN)/* $(INSTALL_PATH)/bin

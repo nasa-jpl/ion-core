@@ -66,6 +66,8 @@ SOURCES=(
 	snw
 	sptrace
 	zco
+	libudplsa
+	libstcpcla
 	)
 
 
