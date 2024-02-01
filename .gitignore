@@ -3,3 +3,5 @@
 /inc
 /bin
 /lib
+/host*.rc
+/*.tmp

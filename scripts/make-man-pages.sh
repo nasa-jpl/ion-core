@@ -2,8 +2,8 @@
 SOURCE_PATH=$1
 
 if [[ -z "$1" ]]; then
-  echo "You must supply a path to the sources."
-  echo "eg. ../ion-open-source-4.1.2"
+  echo "You must supply a relative path to the ION open source code."
+  echo "eg. ../ion-open-source-4.1.2 or ./tmp/ion-open-source-4.1.2"
   exit
 fi
 
@@ -12,7 +12,7 @@ MAN=man
 
 # No man page for:
 # bpversion
-# iowarn
+# ionwarn
 # ltpdeliv
 
 NAMES=(
@@ -51,6 +51,8 @@ bpv7/doc/pod1/ipnfw
 bpv7/doc/pod1/bpclm
 restart/doc/pod1/ionrestart
 bpv7/doc/pod1/bpchat
+bpv7/doc/pod1/stcpcli
+bpv7/doc/pod1/stcpclo
 	)
 
 BASE=(
@@ -89,6 +91,8 @@ ipnfw
 bpclm
 ionrestart
 bpchat
+stcpcli
+stcpclo
 	)
 	
 count=0
