@@ -1,11 +1,24 @@
 #!/bin/bash
-
+ION_VER="4.1.2"
+ION_SRC_URL="https://sourceforge.net/projects/ion-dtn/files/ion-open-source-$ION_VER.tar.gz"
 SOURCE_PATH=$1
 
 if [[ -z "$1" ]]; then
-  echo "You must supply a path to the sources."
-  echo "eg. ../ion-open-source-4.1.2"
-  exit
+  # set default source path and clear it
+  SOURCE_PATH="./tmp/ion-open-source-$ION_VER"
+  rm -rf "$SOURCE_PATH"
+  mkdir -p "$SOURCE_PATH"
+  echo "No source path specified. ION $ION_VER will be downloaded to location: $SOURCE_PATH"
+  # Use wget to download the file
+  # -O - outputs the downloaded file to stdout
+  if wget "$ION_SRC_URL"; then
+	  tar -xzf ion-open-source-$ION_VER.tar.gz -C "$SOURCE_PATH" --strip-components 1
+	  rm ion-open-source-$ION_VER.tar.gz
+      echo "Download and extraction successful."
+  else
+      echo "Download failed."
+      exit 1
+  fi
 fi
 
 SRC=src
@@ -341,7 +354,24 @@ bpclm
 ionrestart
 bpchat
 	)
-			
+
+# Check if 
+
+# Function to clear the content of a directory
+clear_directory() {
+    if [ -d "$1" ] && [ "$(ls -A "$1")" ]; then
+        echo "Clearing contents of: $1"
+        rm -rf "$1"/*
+    else
+        echo "Directory $1 is empty."
+    fi
+}
+
+# Clear the directories
+clear_directory "$SRC"
+clear_directory "$INC"
+clear_directory "$OUT_BIN"
+
 count=0
 while [ "x${SOURCES[count]}" != "x" ]
 	do
