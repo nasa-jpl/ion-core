@@ -205,11 +205,12 @@ uninstall:
 	@rm -f $(INSTALL_PATH)/man/*
 
 distclean:
-	@rm -f $(INC)/* > /dev/null
-	@rm -f $(SRC)/* > /dev/null
-	@rm -f $(LIB)/* > /dev/null
-	@rm -f $(OUT_BIN)/* > /dev/null
-	@rm -f $(MAN)/* > /dev/null
+	@find $(INC) -mindepth 1 ! -name '.gitkeep' -exec rm -rf {} + > /dev/null
+	@find $(SRC) -mindepth 1 ! -name '.gitkeep' -exec rm -rf {} + > /dev/null
+	@find $(LIB) -mindepth 1 ! -name '.gitkeep' -exec rm -rf {} + > /dev/null
+	@find $(OUT_BIN) -mindepth 1 ! -name '.gitkeep' -exec rm -rf {} + > /dev/null
+	@find $(MAN) -mindepth 1 ! -name '.gitkeep' -exec rm -rf {} + > /dev/null
+
 
 
 
