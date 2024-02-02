@@ -29,6 +29,17 @@ else
   ./scripts/host.sh "$IP1" "$IP2" "$protocol"
 fi
 
+# move config files to subfolder
+if [ -d "host${IP1##*.}_testdir" ]; then
+  rm -rf host${IP1##*.}_testdir
+fi
+mkdir -p ./host${IP1##*.}_testdir
+mv host${IP1##*.}.rc ./host${IP1##*.}_testdir
+cp host.ionconfig ./host${IP1##*.}_testdir
+
+# move into subfolder to execute ION
+cd ./host${IP1##*.}_testdir || exit 1
+
 echo ""
 echo "kill previous instances of ION, if any"
 killm

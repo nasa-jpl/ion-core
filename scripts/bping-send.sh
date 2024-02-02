@@ -27,7 +27,18 @@ if [[ $protocol == "ltp" ]]; then
   ./scripts/host.sh "$IP1" "$IP2"
 else
   ./scripts/host.sh "$IP1" "$IP2" "$protocol"
-fi 
+fi
+
+# move config file to subfolder
+if [ -d "host${IP1##*.}_testdir" ]; then
+  rm -rf ./host${IP1##*.}_testdir
+fi
+mkdir -p ./host${IP1##*.}_testdir
+mv host${IP1##*.}.rc ./host${IP1##*.}_testdir
+cp host.ionconfig ./host${IP1##*.}_testdir
+
+# move into subfolder to execute ION
+cd ./host${IP1##*.}_testdir || exit 1
 
 echo ""
 echo "kill previous instances of ION, if any"
@@ -38,7 +49,7 @@ echo "run ION node on host${IP1##*.}..."
 ionstart -I host${IP1##*.}.rc
 
 echo ""
-echo "wait 10 seconds for the other side to start ION too"
+echo "... Wait 10 seconds for the other side to start ION..."
 sleep 10
 
 echo ""
