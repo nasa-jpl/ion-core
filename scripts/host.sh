@@ -12,11 +12,13 @@ b=$(echo $2 | cut --delimiter='.' -f 4)
 
 # Set a default protocol to ltp
 protocol="ltp"
+port="1113"
 
 # Check if the third argument is provided and is either udp or stcp
 if [ $# -eq 3 ]; then
     if [ "$3" == "udp" ] || [ "$3" == "stcp" ]; then
         protocol=$3
+        port="4556"
     else
         echo "Invalid protocol. Please use udp or stcp."
         exit 1
@@ -53,10 +55,11 @@ echo "## end ionadmin" >> host$a.rc
 echo >> host$a.rc
 if [[ $protocol == "ltp" ]]; then
   echo "## begin ltpadmin" >> host$a.rc
+
   echo "1 32" >> host$a.rc
-  echo "a span $a 32 32 1368 10000 1 'udplso $1:1113' 300" >> host$a.rc
-  echo "a span $b 32 32 1368 10000 1 'udplso $2:1113' 300" >> host$a.rc
-  echo "s 'udplsi $1:1113'" >> host$a.rc
+  echo "a span $b 32 32 1368 10000 1 'udplso $2:$port'" >> host$a.rc
+  echo "a seat 'udplsi $1:$port'" >> host$a.rc
+  echo "s" >> host$a.rc
   echo "## end ltpadmin" >> host$a.rc
 fi
 
@@ -69,26 +72,23 @@ echo "a endpoint ipn:$a.0 q" >> host$a.rc
 echo "a endpoint ipn:$a.1 q" >> host$a.rc
 echo "a endpoint ipn:$a.2 q" >> host$a.rc
 if [[ $protocol == "ltp" ]]; then
-  echo "a protocol ltp 1400 100" >> host$a.rc
+  echo "a protocol ltp" >> host$a.rc
   echo "a induct ltp $a ltpcli" >> host$a.rc
-  echo "a outduct ltp $a ltpclo" >> host$a.rc
   echo "a outduct ltp $b ltpclo" >> host$a.rc
-  echo "a plan $b" >> host$a.rc
-  echo "a plan $a" >> host$a.rc
-  echo "a planduct $b ltp/$b" >> host$a.rc
-  echo "a planduct $a ltp/$a" >> host$a.rc
+  echo "a plan ipn:$b.0" >> host$a.rc
+  echo "a planduct ipn:$b.0 ltp $b" >> host$a.rc
 elif [[ $protocol == "stcp" ]]; then
   echo "a protocol stcp 1400 100 -1" >> host$a.rc
-  echo "a induct stcp $1 stcpcli" >> host$a.rc
-  echo "a outduct stcp $2 stcpclo" >> host$a.rc
+  echo "a induct stcp $1:$port stcpcli" >> host$a.rc
+  echo "a outduct stcp $2:$port stcpclo" >> host$a.rc
   echo "a plan ipn:$b.0" >> host$a.rc
-  echo "a planduct ipn:$b.0 stcp $2" >> host$a.rc
+  echo "a planduct ipn:$b.0 stcp $2:$port" >> host$a.rc
 elif [[ $protocol == "udp" ]]; then
   echo "a protocol udp 1400 100" >> host$a.rc
-  echo "a induct udp $1 udpcli" >> host$a.rc
-  echo "a outduct udp $2 udpclo" >> host$a.rc
+  echo "a induct udp $1:$port udpcli" >> host$a.rc
+  echo "a outduct udp $2:$port udpclo" >> host$a.rc
   echo "a plan ipn:$b.0" >> host$a.rc
-  echo "a planduct ipn:$b.0 udp $2" >> host$a.rc
+  echo "a planduct ipn:$b.0 udp $2:$port" >> host$a.rc
 else
   echo "Invalid protocol. Please use udp or stcp."
   exit 1
