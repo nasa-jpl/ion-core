@@ -5,4 +5,5 @@
 /lib
 /host*.rc
 /*.tmp
-/ion.log
+/host*_testdir
+ion.log
