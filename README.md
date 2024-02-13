@@ -30,13 +30,9 @@ You can also run `./scripts/extract.sh` without supplying the path to an existin
 
 ## Man Page Installation
 
-First Run:
+Run:
 
-`./scripts/make-man-pages.sh ../ion-open-source-4.1.2/`
-
-Then run:
-
-`sudo make man-install`
+`sudo make man`
 
 ## Creating ION configuration (".rc") files for a two-node setup
 
@@ -107,7 +103,7 @@ In the ION source code's root directory, there is an Excel file named `ION-LTP-c
 
 ## Building Static Linking Library
 
-To build a static linking library for ION, execute the command `./scripts/lib.sh`.
+To build a static linking library for ION, execute the command `make lib`, and the static library `libioncore.a` will be created in the `lib` directory. All the related object files are under the `lib/object` folder.
 
 ## Contributing Code
 

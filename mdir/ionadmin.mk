@@ -1,6 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
+SRC_ionadmin := \
 	$(SRC)/sdrstring.c \
 	$(SRC)/rfx.c \
 	$(SRC)/bulk.c \
@@ -18,7 +17,10 @@ all:
 	$(SRC)/sdrxn.c \
 	$(SRC)/platform_sm.c \
 	$(SRC)/platform.c \
-	$(SRC)/ionadmin.c \
+	$(SRC)/ionadmin.c
+
+ionadmin:
+	$(GCC) $(CFLAG) $(SRC_ionadmin) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/ionadmin

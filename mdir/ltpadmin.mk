@@ -1,6 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
+SRC_ltpadmin := \
 	$(SRC)/libltp.c \
 	$(SRC)/ltpei.c \
 	$(SRC)/sdrtable.c \
@@ -23,7 +22,10 @@ all:
 	$(SRC)/ion.c \
 	$(SRC)/platform_sm.c \
 	$(SRC)/platform.c \
-	$(SRC)/ltpadmin.c \
+	$(SRC)/ltpadmin.c
+
+ltpadmin:
+	$(GCC) $(CFLAG) $(SRC_ltpadmin) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/ltpadmin

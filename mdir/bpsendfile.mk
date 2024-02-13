@@ -1,6 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
+SRC_bpsendfile := \
 	$(SRC)/bibe.c \
 	$(SRC)/bib.c \
 	$(SRC)/csi.c \
@@ -58,7 +57,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bpsendfile:
+	$(GCC) $(CFLAG) $(SRC_bpsendfile) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bpsendfile

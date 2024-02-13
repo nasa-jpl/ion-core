@@ -1,8 +1,6 @@
 
 
-all:
-	$(GCC) $(CFLAG) \
-	$(SRC)/bibe.c \
+SRC_bpadmin := $(SRC)/bibe.c \
 	$(SRC)/bib.c \
 	$(SRC)/csi.c \
 	$(SRC)/bcb.c \
@@ -59,7 +57,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bpadmin:
+	$(GCC) $(CFLAG) $(SRC_bpadmin) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bpadmin

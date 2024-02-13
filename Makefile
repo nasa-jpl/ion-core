@@ -51,184 +51,57 @@ MDIR = $(PWD)/mdir
 LIB = $(PWD)/lib
 
 export CFLAG = -g -Wall -DSPACE_ORDER=3 -Wall -DBP_EXTENDED -lm -pthread
-
 export PLATFORM = -lm -pthread
 export GCC = /usr/bin/gcc
 
 # Just locally:
 MAKE = /usr/bin/make -f
 
-.PHONY: all clean distclean install install-man uninstall
+# Collect all source files from SRC_{PROGRAM} variables defined in .mk files
+ALL_SRC_FILES := $(sort $(foreach prog,$(PROGRAMS),$(SRC_$(prog))))
+
+# Convert source file paths to object file paths
+OBJ_FILES := $(patsubst $(SRC)/%.c,$(LIB)/obj/%.o,$(ALL_SRC_FILES))
+
+# Ensure the obj directory exists
+_OBJ_DIR := $(shell mkdir -p $(LIB)/obj)
+
+################################
+# Define build targets
+################################
+.PHONY: all $(PROGRAMS) clean distclean install man uninstall
+
+# Default target to build selected programs
+all: $(PROGRAMS)
 
 # Construct .mk file paths
 MK_FILES := $(addprefix $(MDIR)/,$(addsuffix .mk,$(PROGRAMS)))
 
-# Default target to build selected programs
-all: $(MK_FILES)
-	$(foreach mk,$(MK_FILES),$(MAKE) $(mk);)
+# Include.mk files
+include $(MK_FILES)
 
-#all:
-#	$(MAKE) $(MDIR)/bping.mk
-#	$(MAKE) $(MDIR)/bpecho.mk
-#	$(MAKE) $(MDIR)/lgsend.mk
-#	$(MAKE) $(MDIR)/lgagent.mk
-#	$(MAKE) $(MDIR)/bpversion.mk
-#	$(MAKE) $(MDIR)/bptrace.mk
-#	$(MAKE) $(MDIR)/bpstats.mk
-#	$(MAKE) $(MDIR)/bplist.mk
-#	$(MAKE) $(MDIR)/sdrwatch.mk
-#	$(MAKE) $(MDIR)/psmwatch.mk
-#	$(MAKE) $(MDIR)/bpdriver.mk
-#	$(MAKE) $(MDIR)/bpcounter.mk
-#	$(MAKE) $(MDIR)/udpclo.mk
-#	$(MAKE) $(MDIR)/udpcli.mk
-#	$(MAKE) $(MDIR)/bpadmin.mk
-#	$(MAKE) $(MDIR)/ionadmin.mk
-#	$(MAKE) $(MDIR)/ltpadmin.mk
-#	$(MAKE) $(MDIR)/ipnadmin.mk
-#	$(MAKE) $(MDIR)/bprecvfile.mk
-#	$(MAKE) $(MDIR)/bpsendfile.mk
-#	$(MAKE) $(MDIR)/bpsink.mk
-#	$(MAKE) $(MDIR)/bpsource.mk
-#	$(MAKE) $(MDIR)/rfxclock.mk
-#	$(MAKE) $(MDIR)/ionwarn.mk
-#	$(MAKE) $(MDIR)/ltpclock.mk
-#	$(MAKE) $(MDIR)/ltpdeliv.mk
-#	$(MAKE) $(MDIR)/udplso.mk
-#	$(MAKE) $(MDIR)/udplsi.mk
-#	$(MAKE) $(MDIR)/ltpmeter.mk
-#	$(MAKE) $(MDIR)/bptransit.mk
-#	$(MAKE) $(MDIR)/ipnadminep.mk
-#	$(MAKE) $(MDIR)/ltpclo.mk
-#	$(MAKE) $(MDIR)/bpclock.mk
-#	$(MAKE) $(MDIR)/ltpcli.mk
-#	$(MAKE) $(MDIR)/ipnfw.mk
-#	$(MAKE) $(MDIR)/bpclm.mk
-#	$(MAKE) $(MDIR)/ionrestart.mk
-#	$(MAKE) $(MDIR)/bpchat.mk
-#	$(MAKE) $(MDIR)/stcpcli.mk
-#	$(MAKE) $(MDIR)/stcpclo.mk
-#
-bping:
-	$(MAKE) $(MDIR)/bping.mk
-#
-bpecho:
-	$(MAKE) $(MDIR)/bpecho.mk
-#
-lgsend:
-	$(MAKE) $(MDIR)/lgsend.mk
-#
-lgagent:
-	$(MAKE) $(MDIR)/lgagent.mk
-#
-bpversion:
-	$(MAKE) $(MDIR)/bpversion.mk
-#
-bptrace:
-	$(MAKE) $(MDIR)/bptrace.mk
-#
-bpstats:
-	$(MAKE) $(MDIR)/bpstats.mk
-#
-bplist:
-	$(MAKE) $(MDIR)/bplist.mk
-#
-sdrwatch:
-	$(MAKE) $(MDIR)/sdrwatch.mk
-#
-psmwatch:
-	$(MAKE) $(MDIR)/psmwatch.mk
-#
-bpdriver:
-	$(MAKE) $(MDIR)/bpdriver.mk
-#
-bpcounter:
-	$(MAKE) $(MDIR)/bpcounter.mk
-#
-udpclo:
-	$(MAKE) $(MDIR)/udpclo.mk
-#
-udpcli:
-	$(MAKE) $(MDIR)/udpcli.mk
-#
-bpadmin:
-	$(MAKE) $(MDIR)/bpadmin.mk
-#
-ionadmin:
-	$(MAKE) $(MDIR)/ionadmin.mk
-#
-ltpadmin:
-	$(MAKE) $(MDIR)/ltpadmin.mk
-#
-ipnadmin:
-	$(MAKE) $(MDIR)/ipnadmin.mk
-#
-bprecvfile:
-	$(MAKE) $(MDIR)/bprecvfile.mk
-#
-bpsendfile:
-	$(MAKE) $(MDIR)/bpsendfile.mk
-#
-bpsink:
-	$(MAKE) $(MDIR)/bpsink.mk
-#
-bpsource:
-	$(MAKE) $(MDIR)/bpsource.mk
-#
-rfxclock:
-	$(MAKE) $(MDIR)/rfxclock.mk
-#
-ionwarn:
-	$(MAKE) $(MDIR)/ionwarn.mk
-#
-ltpclock:
-	$(MAKE) $(MDIR)/ltpclock.mk
-#
-ltpdeliv:
-	$(MAKE) $(MDIR)/ltpdeliv.mk
-#
-udplso:
-	$(MAKE) $(MDIR)/udplso.mk
-#
-udplsi:
-	$(MAKE) $(MDIR)/udplsi.mk
-#
-ltpmeter:
-	$(MAKE) $(MDIR)/ltpmeter.mk
-#
-bptransit:
-	$(MAKE) $(MDIR)/bptransit.mk
-#
-ipnadminep:
-	$(MAKE) $(MDIR)/ipnadminep.mk
-#
-ltpclo:
-	$(MAKE) $(MDIR)/ltpclo.mk
-#
-bpclock:
-	$(MAKE) $(MDIR)/bpclock.mk
-#
-ltpcli:
-	$(MAKE) $(MDIR)/ltpcli.mk
-#
-ipnfw:
-	$(MAKE) $(MDIR)/ipnfw.mk
-#
-bpclm:
-	$(MAKE) $(MDIR)/bpclm.mk
-#
-ionrestart:
-	$(MAKE) $(MDIR)/ionrestart.mk
-#
-bpchat:
-	$(MAKE) $(MDIR)/bpchat.mk
-#
-stcpcli:
-	$(MAKE) $(MDIR)/stcpcli.mk
-#
-stcpclo:
-	$(MAKE) $(MDIR)/stcpclo.mk
-					
+# After inclusion of all .mk files, the SRC_{PROGRAM} variables are now 
+# visible to the rest of the Makefile.
+
+# Collect all source files from SRC_{PROGRAM} variables defined in .mk files
+ALL_SRC_FILES := $(sort $(foreach prog,$(PROGRAMS),$(SRC_$(prog))))
+
+# Convert source file paths to object file paths
+OBJ_FILES := $(patsubst $(SRC)/%.c,$(LIB)/obj/%.o,$(ALL_SRC_FILES))
+
+# Ensure the obj directory exists
+_OBJ_DIR := $(shell mkdir -p $(LIB)/obj)
+
+# Static library target
+lib: $(OBJ_FILES)
+	ar rcs $(LIB)/libioncore.a $^
+
+# Object files compile rule for static library #
+# *** Remember to check if there are different flags for different programs. ***
+# *** This rule here assumes they are all the same, which is true for 4.1.2. ***
+$(LIB)/obj/%.o: $(SRC)/%.c
+	$(GCC) $(CFLAG) -I$(INC) -c $< $(PLATFORM) -o $@
+				
 install:
 	cp -v $(OUT_BIN)/* $(INSTALL_PATH)/bin
 	cp -v $(OUT_BIN)/ionstart $(INSTALL_PATH)/bin
@@ -236,13 +109,13 @@ install:
 	cp -v $(OUT_BIN)/ionstop $(INSTALL_PATH)/bin
 	cp -v $(OUT_BIN)/killm $(INSTALL_PATH)/bin
 
-install-man:
+man:
+	./scripts/make-man-pages.sh $(SRC) "$(PROGRAMS)"
 	cp -v $(MAN)/* $(INSTALL_PATH)/man || true
 
 clean:
-# @rm -f $(OUT_BIN)/* > /dev/null
-# keep the ION scripts, distclean will wipe them
-	@find $(OUT_BIN) -type f ! -name 'ionstart' ! -name 'ionstart.awk' ! -name 'ionstop' ! -name 'killm' -exec rm -f {} +
+	@find $(OUT_BIN) -type f ! -name 'ionstart' ! -name 'ionstart.awk' ! -name 'ionstop' ! -name 'killm' -exec rm -f {} + > /dev/null
+	@find $(LIB) -type f -exec rm -f {} + > /dev/null
 
 uninstall:
 	@rm -f $(INSTALL_PATH)/bin/*

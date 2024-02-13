@@ -1,7 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
-	$(SRC)/bpclm.c \
+SRC_bpclm := $(SRC)/bpclm.c \
 	$(SRC)/platform_sm.c \
 	$(SRC)/platform.c \
 	$(SRC)/rfx.c \
@@ -58,7 +56,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bpclm:
+	$(GCC) $(CFLAG) $(SRC_bpclm) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bpclm

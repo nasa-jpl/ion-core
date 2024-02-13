@@ -1,6 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
+SRC_ipnadmin := \
 	$(SRC)/bib.c \
 	$(SRC)/csi.c \
 	$(SRC)/bcb.c \
@@ -59,7 +58,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+ipnadmin:
+	$(GCC) $(CFLAG) $(SRC_ipnadmin) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/ipnadmin

@@ -10,7 +10,6 @@ if [[ -z "$1" ]]; then
   mkdir -p "$SOURCE_PATH"
   echo "No source path specified. ION $ION_VER will be downloaded to location: $SOURCE_PATH"
   # Use wget to download the file
-  # -O - outputs the downloaded file to stdout
   if wget "$ION_SRC_URL"; then
 	  tar -xzf ion-open-source-$ION_VER.tar.gz -C "$SOURCE_PATH" --strip-components 1
 	  rm ion-open-source-$ION_VER.tar.gz
@@ -23,10 +22,7 @@ fi
 
 SRC=src
 INC=inc
-SCR=scripts
 OUT_BIN=bin
-
-POD2MAN=pod2man
 MAN=man
 
 SOURCES=(
@@ -279,83 +275,45 @@ SCRIPTS=(
 	$SOURCE_PATH/killm
 		)
 
-NAMES=(
-bpv7/doc/pod1/bping
-bpv7/doc/pod1/bpecho
-bpv7/doc/pod1/lgsend
-bpv7/doc/pod1/lgagent
-bpv7/doc/pod1/bptrace
-bpv7/doc/pod1/bpstats
-bpv7/doc/pod1/bplist
-ici/doc/pod1/sdrwatch
-ici/doc/pod1/psmwatch
-bpv7/doc/pod1/bpdriver
-bpv7/doc/pod1/bpcounter
-bpv7/doc/pod1/udpclo
-bpv7/doc/pod1/udpcli
-bpv7/doc/pod1/bpadmin
-ici/doc/pod1/ionadmin
-ltp/doc/pod1/ltpadmin
-bpv7/doc/pod1/ipnadmin
-bpv7/doc/pod1/bprecvfile
-bpv7/doc/pod1/bpsendfile
-bpv7/doc/pod1/bpsink
-bpv7/doc/pod1/bpsource
-ici/doc/pod1/rfxclock
-ltp/doc/pod1/ltpclock
-ltp/doc/pod1/udplso
-ltp/doc/pod1/udplsi
-ltp/doc/pod1/ltpmeter
-bpv7/doc/pod1/bptransit
-bpv7/doc/pod1/ipnadminep
-bpv7/doc/pod1/ltpclo
-bpv7/doc/pod1/bpclock
-bpv7/doc/pod1/ltpcli
-bpv7/doc/pod1/ipnfw
-bpv7/doc/pod1/bpclm
-restart/doc/pod1/ionrestart
-bpv7/doc/pod1/bpchat
+MANPAGE=(
+	$SOURCE_PATH/bpv7/doc/pod1/bping.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpecho.pod
+	$SOURCE_PATH/bpv7/doc/pod1/lgsend.pod
+	$SOURCE_PATH/bpv7/doc/pod1/lgagent.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bptrace.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpstats.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bplist.pod
+	$SOURCE_PATH/ici/doc/pod1/sdrwatch.pod
+	$SOURCE_PATH/ici/doc/pod1/psmwatch.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpdriver.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpcounter.pod
+	$SOURCE_PATH/bpv7/doc/pod1/udpclo.pod
+	$SOURCE_PATH/bpv7/doc/pod1/udpcli.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpadmin.pod
+	$SOURCE_PATH/ici/doc/pod1/ionadmin.pod
+	$SOURCE_PATH/ltp/doc/pod1/ltpadmin.pod
+	$SOURCE_PATH/bpv7/doc/pod1/ipnadmin.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bprecvfile.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpsendfile.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpsink.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpsource.pod
+	$SOURCE_PATH/ici/doc/pod1/rfxclock.pod
+	$SOURCE_PATH/ltp/doc/pod1/ltpclock.pod
+	$SOURCE_PATH/ltp/doc/pod1/udplso.pod
+	$SOURCE_PATH/ltp/doc/pod1/udplsi.pod
+	$SOURCE_PATH/ltp/doc/pod1/ltpmeter.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bptransit.pod
+	$SOURCE_PATH/bpv7/doc/pod1/ipnadminep.pod
+	$SOURCE_PATH/bpv7/doc/pod1/ltpclo.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpclock.pod
+	$SOURCE_PATH/bpv7/doc/pod1/ltpcli.pod
+	$SOURCE_PATH/bpv7/doc/pod1/ipnfw.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpclm.pod
+	$SOURCE_PATH/restart/doc/pod1/ionrestart.pod
+	$SOURCE_PATH/bpv7/doc/pod1/bpchat.pod
+	$SOURCE_PATH/bpv7/doc/pod1/stcpcli.pod
+	$SOURCE_PATH/bpv7/doc/pod1/stcpclo.pod
 	)
-
-BASE=(
-bping
-bpecho
-lgsend
-lgagent
-bptrace
-bpstats
-bplist
-sdrwatch
-psmwatch
-bpdriver
-bpcounter
-udpclo
-udpcli
-bpadmin
-ionadmin
-ltpadmin
-ipnadmin
-bprecvfile
-bpsendfile
-bpsink
-bpsource
-rfxclock
-ltpclock
-udplso
-udplsi
-ltpmeter
-bptransit
-ipnadminep
-ltpclo
-bpclock
-ltpcli
-ipnfw
-bpclm
-ionrestart
-bpchat
-	)
-
-# Check if 
 
 # Function to clear the content of a directory
 clear_directory() {
@@ -372,51 +330,56 @@ clear_directory "$SRC"
 clear_directory "$INC"
 clear_directory "$OUT_BIN"
 
+echo "Extracting source .c files from $SOURCE_PATH to $SRC"
 count=0
 while [ "x${SOURCES[count]}" != "x" ]
 	do
-		if cp ${SOURCES[count]} $SRC
-		then echo found ${SOURCES[count]}
-			else echo ERROR: ${SOURCES[count]} is missing or has moved. Aborting.
+		if cp "${SOURCES[count]}" $SRC
+		then echo found "${SOURCES[count]}"
+			else echo ERROR: "${SOURCES[count]}" is missing or has moved. Aborting.
 			break
 		fi
 	count=$(( $count + 1 ))
 done
 
+echo "Extracting header .h files from $SOURCE_PATH to $INC"
 count=0
 while [ "x${HEADERS[count]}" != "x" ]
 	do
-		if cp ${HEADERS[count]} $INC
-		then echo found ${HEADERS[count]}
-			else echo ERROR: ${HEADERS[count]} is missing or has moved. Aborting.
+		if cp "${HEADERS[count]}" $INC
+		then echo found "${HEADERS[count]}"
+			else echo ERROR: "${HEADERS[count]}" is missing or has moved. Aborting.
 			break
 		fi
 	count=$(( $count + 1 ))
 
 done
 
+echo "Extracting ION scripts from $SOURCE_PATH to $OUT_BIN"
 count=0
 while [ "x${SCRIPTS[count]}" != "x" ]
 	do
-		if cp ${SCRIPTS[count]} $OUT_BIN
-		then echo found ${SCRIPTS[count]}
-			else echo ERROR: ${SCRIPTS[count]} is missing or has moved. Aborting.
+		if cp "${SCRIPTS[count]}" $OUT_BIN
+		then echo found "${SCRIPTS[count]}"
+			else echo ERROR: "${SCRIPTS[count]}" is missing or has moved. Aborting.
 			break
 		fi
 	count=$(( $count + 1 ))
-
 done
 
-##count=0
-##while [ "x${NAMES[count]}" != "x" ]
-##	do
-##		if $POD2MAN $SOURCE_PATH/${NAMES[count]}.pod | gzip -c > $MAN/${BASE[count]}.1.gz
-##		then echo found ${NAMES[count]}
-##			else echo ERROR: ${NAMES[count]} is missing or has moved. Aborting.
-##			break
-##		fi
-##	count=$(( $count + 1 ))
-##done
+echo "Extracting man page .pod files from $SOURCE_PATH to $SRC/$MAN"
+# Create the directory, if it doesn't exist.
+mkdir -p "$SRC/$MAN"
+count=0
+while [ "x${MANPAGE[count]}" != "x" ]
+	do
+		if cp "${MANPAGE[count]}" $SRC/$MAN/
+		then echo found "${MANPAGE[count]}"
+			else echo ERROR: "${MANPAGE[count]}" is missing or has moved. Aborting.
+			break
+		fi
+	count=$(( $count + 1 ))
+done
 
 # Clean up the inc/noextensions.c file here.
 # The compiler produces "warning: excess elements in scalar initializer"

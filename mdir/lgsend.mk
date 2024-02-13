@@ -1,5 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
+SRC_lgsend := \
 	$(SRC)/lgsend.c \
 	$(SRC)/platform.c \
 	$(SRC)/libbp.c \
@@ -57,7 +56,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+lgsend:
+	$(GCC) $(CFLAG) $(SRC_lgsend) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/lgsend

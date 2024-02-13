@@ -1,6 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
+SRC_ltpcli := \
 	$(SRC)/ltpcli.c \
 	$(SRC)/platform.c \
 	$(SRC)/ion.c \
@@ -61,7 +60,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+ltpcli:
+	$(GCC) $(CFLAG) $(SRC_ltpcli) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/ltpcli

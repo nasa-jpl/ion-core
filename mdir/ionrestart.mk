@@ -1,7 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
-	-I$(INC) \
+SRC_ionrestart := \
 	$(SRC)/ionrestart.c \
 	$(SRC)/libcfdpP.c \
 	$(SRC)/platform.c \
@@ -66,6 +64,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+ionrestart:
+	$(GCC) $(CFLAG) $(SRC_ionrestart) \
+	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/ionrestart

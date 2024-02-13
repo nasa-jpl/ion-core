@@ -1,5 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
+SRC_sdrwatch := \
 	$(SRC)/sdrwatch.c \
 	$(SRC)/sdrxn.c \
 	$(SRC)/platform.c \
@@ -16,7 +15,10 @@ all:
 	$(SRC)/sdrlist.c \
 	$(SRC)/ion.c \
 	$(SRC)/smrbt.c \
-	$(SRC)/rfx.c \
+	$(SRC)/rfx.c
+
+sdrwatch:
+	$(GCC) $(CFLAG) $(SRC_sdrwatch) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/sdrwatch

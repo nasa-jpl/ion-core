@@ -1,7 +1,5 @@
 
-all:
-	$(GCC) $(CFLAG) \
-	$(SRC)/bpclock.c \
+SRC_bpclock := $(SRC)/bpclock.c \
 	$(SRC)/platform_sm.c \
 	$(SRC)/sdrxn.c \
 	$(SRC)/platform.c \
@@ -58,7 +56,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bpclock:
+	$(GCC) $(CFLAG) $(SRC_bpclock) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bpclock

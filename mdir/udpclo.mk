@@ -1,5 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
+SRC_udpclo := \
 	$(SRC)/udpclo.c \
 	$(SRC)/platform.c \
 	$(SRC)/ion.c \
@@ -58,7 +57,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+udpclo:
+	$(GCC) $(CFLAG) $(SRC_udpclo) \
 	-I$(INC) \
 	$(PLATFORM) \
-	-lm -o $(OUT_BIN)/udpclo
+	-o $(OUT_BIN)/udpclo

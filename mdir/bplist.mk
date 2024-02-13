@@ -1,5 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
+SRC_bplist := \
 	$(SRC)/bplist.c \
 	$(SRC)/libbp.c \
 	$(SRC)/sdrxn.c \
@@ -57,7 +56,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bplist:
+	$(GCC) $(CFLAG) $(SRC_bplist) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bplist

@@ -1,5 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
+SRC_bpecho := \
 	$(SRC)/bpecho.c \
 	$(SRC)/platform_sm.c \
 	$(SRC)/platform.c \
@@ -55,11 +54,12 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bpecho:
+	$(GCC) $(CFLAG) $(SRC_bpecho) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bpecho
 
-#	$(SRC)/bpsec.c \
-#	$(SRC)/profiles.c \
 

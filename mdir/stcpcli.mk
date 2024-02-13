@@ -1,7 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
-	-I$(INC) \
-	$(PLATFORM) \
+SRC_stcpcli := \
 	$(SRC)/libbp.c \
 	$(SRC)/platform.c \
 	$(SRC)/sdrxn.c \
@@ -61,4 +58,9 @@ all:
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
 	$(SRC)/rfc9173_utils.c \
-	-lm -o $(OUT_BIN)/stcpcli
+
+stcpcli:
+	$(GCC) $(CFLAG) $(SRC_stcpcli) \
+	-I$(INC) \
+	$(PLATFORM) \
+	-o $(OUT_BIN)/stcpcli

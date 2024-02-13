@@ -1,5 +1,4 @@
-all:
-	$(GCC) $(CFLAG) \
+SRC_bping := \
 	$(SRC)/bping.c \
 	$(SRC)/libbp.c \
 	$(SRC)/platform.c \
@@ -55,7 +54,10 @@ all:
 	$(SRC)/ion_test_sc.c \
 	$(SRC)/bib_hmac_sha2_sc.c \
 	$(SRC)/bcb_aes_gcm_sc.c \
-	$(SRC)/rfc9173_utils.c \
+	$(SRC)/rfc9173_utils.c
+
+bping:
+	$(GCC) $(CFLAG) $(SRC_bping) \
 	-I$(INC) \
 	$(PLATFORM) \
 	-o $(OUT_BIN)/bping
