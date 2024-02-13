@@ -1,3 +1,40 @@
+#################################
+# Makefile for ION-Core
+#################################
+
+# Build List
+
+# MANDATORY LIST: should not be modified.
+## ICI
+PROGRAMS := ionadmin ionwarn rfxclock ionrestart 
+
+## BPv7
+PROGRAMS += bpadmin bpclm bpclock bptransit ipnadmin ipnadminep ipnfw
+
+## Utility Programs
+PROGRAMS += bpsink bpsource bpecho bping bpstats bptrace 
+
+
+# OPTIONAL LIST: can be modified to add or remove programs. 
+#                Commented out entries are available but not built.
+#				 by default. Uncomment to enable.
+## ICI
+PROGRAMS += psmwatch sdrwatch 
+
+## BPv7
+PROGRAMS += bpversion lgagent lgsend
+
+## CLA: must include one of STCP, UDP, or LTP 
+PROGRAMS += stcpcli stcpclo 
+PROGRAMS += udpcli udpclo 
+PROGRAMS += ltpcli ltpclo udplsi udplso ltpclock ltpdeliv ltpmeter ltpadmin
+
+## Utility Programs
+PROGRAMS += bprecvfile bpsendfile bpchat bpcounter bpdriver bplist
+
+###########################
+# Build Rules
+###########################
 # This is probably the only thing users would want to change:
 INSTALL_PATH = /usr/local/
 
@@ -23,47 +60,54 @@ MAKE = /usr/bin/make -f
 
 .PHONY: all clean distclean install install-man uninstall
 
-all:
-	$(MAKE) $(MDIR)/bping.mk
-	$(MAKE) $(MDIR)/bpecho.mk
-	$(MAKE) $(MDIR)/lgsend.mk
-	$(MAKE) $(MDIR)/lgagent.mk
-	$(MAKE) $(MDIR)/bpversion.mk
-	$(MAKE) $(MDIR)/bptrace.mk
-	$(MAKE) $(MDIR)/bpstats.mk
-	$(MAKE) $(MDIR)/bplist.mk
-	$(MAKE) $(MDIR)/sdrwatch.mk
-	$(MAKE) $(MDIR)/psmwatch.mk
-	$(MAKE) $(MDIR)/bpdriver.mk
-	$(MAKE) $(MDIR)/bpcounter.mk
-	$(MAKE) $(MDIR)/udpclo.mk
-	$(MAKE) $(MDIR)/udpcli.mk
-	$(MAKE) $(MDIR)/bpadmin.mk
-	$(MAKE) $(MDIR)/ionadmin.mk
-	$(MAKE) $(MDIR)/ltpadmin.mk
-	$(MAKE) $(MDIR)/ipnadmin.mk
-	$(MAKE) $(MDIR)/bprecvfile.mk
-	$(MAKE) $(MDIR)/bpsendfile.mk
-	$(MAKE) $(MDIR)/bpsink.mk
-	$(MAKE) $(MDIR)/bpsource.mk
-	$(MAKE) $(MDIR)/rfxclock.mk
-	$(MAKE) $(MDIR)/ionwarn.mk
-	$(MAKE) $(MDIR)/ltpclock.mk
-	$(MAKE) $(MDIR)/ltpdeliv.mk
-	$(MAKE) $(MDIR)/udplso.mk
-	$(MAKE) $(MDIR)/udplsi.mk
-	$(MAKE) $(MDIR)/ltpmeter.mk
-	$(MAKE) $(MDIR)/bptransit.mk
-	$(MAKE) $(MDIR)/ipnadminep.mk
-	$(MAKE) $(MDIR)/ltpclo.mk
-	$(MAKE) $(MDIR)/bpclock.mk
-	$(MAKE) $(MDIR)/ltpcli.mk
-	$(MAKE) $(MDIR)/ipnfw.mk
-	$(MAKE) $(MDIR)/bpclm.mk
-	$(MAKE) $(MDIR)/ionrestart.mk
-	$(MAKE) $(MDIR)/bpchat.mk
-	$(MAKE) $(MDIR)/stcpcli.mk
-	$(MAKE) $(MDIR)/stcpclo.mk
+# Construct .mk file paths
+MK_FILES := $(addprefix $(MDIR)/,$(addsuffix .mk,$(PROGRAMS)))
+
+# Default target to build selected programs
+all: $(MK_FILES)
+	$(foreach mk,$(MK_FILES),$(MAKE) $(mk);)
+
+#all:
+#	$(MAKE) $(MDIR)/bping.mk
+#	$(MAKE) $(MDIR)/bpecho.mk
+#	$(MAKE) $(MDIR)/lgsend.mk
+#	$(MAKE) $(MDIR)/lgagent.mk
+#	$(MAKE) $(MDIR)/bpversion.mk
+#	$(MAKE) $(MDIR)/bptrace.mk
+#	$(MAKE) $(MDIR)/bpstats.mk
+#	$(MAKE) $(MDIR)/bplist.mk
+#	$(MAKE) $(MDIR)/sdrwatch.mk
+#	$(MAKE) $(MDIR)/psmwatch.mk
+#	$(MAKE) $(MDIR)/bpdriver.mk
+#	$(MAKE) $(MDIR)/bpcounter.mk
+#	$(MAKE) $(MDIR)/udpclo.mk
+#	$(MAKE) $(MDIR)/udpcli.mk
+#	$(MAKE) $(MDIR)/bpadmin.mk
+#	$(MAKE) $(MDIR)/ionadmin.mk
+#	$(MAKE) $(MDIR)/ltpadmin.mk
+#	$(MAKE) $(MDIR)/ipnadmin.mk
+#	$(MAKE) $(MDIR)/bprecvfile.mk
+#	$(MAKE) $(MDIR)/bpsendfile.mk
+#	$(MAKE) $(MDIR)/bpsink.mk
+#	$(MAKE) $(MDIR)/bpsource.mk
+#	$(MAKE) $(MDIR)/rfxclock.mk
+#	$(MAKE) $(MDIR)/ionwarn.mk
+#	$(MAKE) $(MDIR)/ltpclock.mk
+#	$(MAKE) $(MDIR)/ltpdeliv.mk
+#	$(MAKE) $(MDIR)/udplso.mk
+#	$(MAKE) $(MDIR)/udplsi.mk
+#	$(MAKE) $(MDIR)/ltpmeter.mk
+#	$(MAKE) $(MDIR)/bptransit.mk
+#	$(MAKE) $(MDIR)/ipnadminep.mk
+#	$(MAKE) $(MDIR)/ltpclo.mk
+#	$(MAKE) $(MDIR)/bpclock.mk
+#	$(MAKE) $(MDIR)/ltpcli.mk
+#	$(MAKE) $(MDIR)/ipnfw.mk
+#	$(MAKE) $(MDIR)/bpclm.mk
+#	$(MAKE) $(MDIR)/ionrestart.mk
+#	$(MAKE) $(MDIR)/bpchat.mk
+#	$(MAKE) $(MDIR)/stcpcli.mk
+#	$(MAKE) $(MDIR)/stcpclo.mk
 #
 bping:
 	$(MAKE) $(MDIR)/bping.mk

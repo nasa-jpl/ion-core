@@ -17,3 +17,5 @@ make || { echo "Make failed"; exit 1; }
 
 # Run make install with or without sudo based on whether we are root
 $use_sudo make install
+
+echo "Task build-install.sh completed."
