@@ -103,8 +103,8 @@ man:
 	cp -v $(MAN)/* $(INSTALL_PATH)/man || true
 
 clean:
-	@find $(OUT_BIN) -type f ! -name 'ionstart' ! -name 'ionstart.awk' ! -name 'ionstop' ! -name 'killm' -exec rm -f {} + > /dev/null
-	@find $(LIB) -type f -exec rm -f {} + > /dev/null
+	@find $(OUT_BIN) -type f ! -name '.gitkeep' ! -name 'ionstart' ! -name 'ionstart.awk' ! -name 'ionstop' ! -name 'killm' -exec rm -f {} + > /dev/null
+	@find $(LIB) -type f ! -name '.gitkeep' -exec rm -f {} + > /dev/null
 
 uninstall:
 	@rm -f $(INSTALL_PATH)/bin/*
