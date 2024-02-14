@@ -2,34 +2,40 @@
 # Makefile for ION-Core
 #################################
 
-# Build List
-
-# MANDATORY LIST: should not be modified.
-## ICI
+#################################
+# Mandatory Build List
+#################################
+# This section should not be edited.
+# ICI
 PROGRAMS := ionadmin ionwarn rfxclock ionrestart 
 
-## BPv7
+# BPv7
 PROGRAMS += bpadmin bpclm bpclock bptransit ipnadmin ipnadminep ipnfw
 
-## Utility Programs
+# Utility Programs
 PROGRAMS += bpsink bpsource bpecho bping bpstats bptrace 
 
+################################
+# OPTIONAL Build LIST
+################################
+# This list be modified to add or remove programs.
+# Commented out entries are available but not built
+# by default. Uncomment to enable.
+# At least one CLA must be selected unless you are using
+# only customized CLAs.
 
-# OPTIONAL LIST: can be modified to add or remove programs. 
-#                Commented out entries are available but not built.
-#				 by default. Uncomment to enable.
-## ICI
+# ICI
 PROGRAMS += psmwatch sdrwatch 
 
-## BPv7
+# BPv7
 PROGRAMS += bpversion lgagent lgsend
 
-## CLA: must include one of STCP, UDP, or LTP 
+# CLA: must include at least one of STCP, UDP, or LTP 
 PROGRAMS += stcpcli stcpclo 
 PROGRAMS += udpcli udpclo 
 PROGRAMS += ltpcli ltpclo udplsi udplso ltpclock ltpdeliv ltpmeter ltpadmin
 
-## Utility Programs
+# Utility Programs
 PROGRAMS += bprecvfile bpsendfile bpchat bpcounter bpdriver bplist
 
 ###########################
@@ -50,6 +56,15 @@ export SCR = $(PWD)/scripts
 MDIR = $(PWD)/mdir
 LIB = $(PWD)/lib
 
+###########################
+# Compiler Flags
+###########################
+# SPACE_ORDER of 3 specifies 64 bit systems.
+# SPACE_ORDER of 2 specifies 32 bit systems.
+# BP_EXTENDED is required enables extension blocks required for QoS.
+#   - Currently QoS is included as part of minimal set for ION-core.
+#   - QoS is not inherited from BPv6 and made availabe in BPv7 as 
+#     a non-standard prioritization method.
 export CFLAG = -g -Wall -DSPACE_ORDER=3 -Wall -DBP_EXTENDED -lm -pthread
 export PLATFORM = -lm -pthread
 export GCC = /usr/bin/gcc
