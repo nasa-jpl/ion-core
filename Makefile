@@ -2,41 +2,15 @@
 # Makefile for ION-Core
 #################################
 
-#################################
-# Mandatory Build List
-#################################
-# This section should not be edited.
-# ICI
-PROGRAMS := ionadmin ionwarn rfxclock ionrestart 
+# bring in the build list
+include ./build-list.mk
 
-# BPv7
-PROGRAMS += bpadmin bpclm bpclock bptransit ipnadmin ipnadminep ipnfw
+# test if inclusion is successful
+ifndef BUILD_LIST_INCLUDED
+$(error build-list.mk is not found or not included, cannot build.)
+endif
 
-# Utility Programs
-PROGRAMS += bpsink bpsource bpecho bping bpstats bptrace 
-
-################################
-# OPTIONAL Build LIST
-################################
-# This list be modified to add or remove programs.
-# Commented out entries are available but not built
-# by default. Uncomment to enable.
-# At least one CLA must be selected unless you are using
-# only customized CLAs.
-
-# ICI
-PROGRAMS += psmwatch sdrwatch 
-
-# BPv7
-PROGRAMS += bpversion lgagent lgsend
-
-# CLA: must include at least one of STCP, UDP, or LTP 
-PROGRAMS += stcpcli stcpclo 
-PROGRAMS += udpcli udpclo 
-PROGRAMS += ltpcli ltpclo udplsi udplso ltpclock ltpdeliv ltpmeter ltpadmin
-
-# Utility Programs
-PROGRAMS += bprecvfile bpsendfile bpchat bpcounter bpdriver bplist
+$(info build-list.mk has been included, proceed to build.)
 
 ###########################
 # Build Rules

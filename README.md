@@ -1,8 +1,21 @@
 # ION-Core for Linux (and WSL)
 
+- [ION-Core for Linux (and WSL)](#ion-core-for-linux-and-wsl)
+  - [Build \& Install](#build--install)
+  - [Man Page Installation](#man-page-installation)
+  - [Creating ION configuration (".rc") files for a two-node setup](#creating-ion-configuration-rc-files-for-a-two-node-setup)
+  - [Automated Script to Build, Install, and Test Ion-core on Two Hosts](#automated-script-to-build-install-and-test-ion-core-on-two-hosts)
+  - [Adjusting Pre-Allocation of Memory/Storage Space for ION](#adjusting-pre-allocation-of-memorystorage-space-for-ion)
+  - [Tuning LTP Performance](#tuning-ltp-performance)
+  - [Building Static Linking Library](#building-static-linking-library)
+  - [Contributing Code](#contributing-code)
+  - [WSL2 Networking Issue](#wsl2-networking-issue)
+  - [Selecting which ION-core Features to Build](#selecting-which-ion-core-features-to-build)
+  - [Release Notes](#release-notes)
+
 ## Build & Install
 
-Currently ion-core only builds on 64-bit OS. Future releases will support 32-bit OS.
+Currently ion-core only builds on 64-bit OS. Version 4.1.3 (expected in summer of 2024) will support 32-bit OS.
 
 Be sure you have the tools installed:
 ```bash
@@ -124,6 +137,16 @@ Set it to version 1:
 Alternative approach is to use the WSL Vpnkit to provide VPN connection:
 
 https://github.com/sakai135/wsl-vpnkit
+
+## Selecting which ION-core Features to Build
+
+You can select the feature you want to build for ion-core by updating the `build-list.mk` file. All available, optional features are listed. 
+
+At least one CLA must be selected. 
+
+All necessary programs/daemons associated with a feature or a CLA is listed on one line, so when commenting/uncommenting features, please do so at the "line level", not the individual program.
+
+Save the changes to the `build-list.mk`, and then remove the old installation by running `make clean`, `sudo make uninstall`, and then rebuild ion-core to install the new set of features.
 
 --------------------------
 
