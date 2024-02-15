@@ -39,7 +39,7 @@ LIB = $(PWD)/lib
 #   - Currently QoS is included as part of minimal set for ION-core.
 #   - QoS is not inherited from BPv6 and made availabe in BPv7 as 
 #     a non-standard prioritization method.
-export CFLAG = -g -Wall -DSPACE_ORDER=3 -Wall -DBP_EXTENDED -lm -pthread
+export CFLAG = -g -Wall -DSPACE_ORDER=${ARCH} -Wall -DBP_EXTENDED -lm -pthread
 export PLATFORM = -lm -pthread
 export GCC = /usr/bin/gcc
 

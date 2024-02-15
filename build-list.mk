@@ -3,6 +3,14 @@
 #
 BUILD_LIST_INCLUDED = YES
 
+# 
+# Architecture
+#
+# 64 bits (default)
+ARCH = 3
+# 32 bits
+#ARCH = 2
+
 #
 # PART I: Mandatory Features (do not edit)
 #
