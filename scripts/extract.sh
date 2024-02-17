@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Get the full path to the directory containing the script
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+
+# Change directory to the script's parent directory
+cd "$SCRIPT_DIR/.." || exit
+
 ION_VER="4.1.2"
 ION_SRC_URL="https://sourceforge.net/projects/ion-dtn/files/ion-open-source-$ION_VER.tar.gz"
 SOURCE_PATH=$1
@@ -212,7 +219,7 @@ HEADERS=(
 	$SOURCE_PATH/ici/include/lyst.h
 #	$SOURCE_PATH/ici/library/lystP.h
 	$SOURCE_PATH/ici/include/memmgr.h
-#	$SOURCE_PATH/bpv7/library/ext/noextensions.c
+	$SOURCE_PATH/bpv7/library/ext/noextensions.c
 	$SOURCE_PATH/ici/include/platform.h
 	$SOURCE_PATH/ici/include/platform_sm.h
 	

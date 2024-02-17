@@ -9,6 +9,12 @@ else
     use_sudo="sudo"
 fi
 
+# Get the full path to the directory containing the script
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+
+# Change directory to the script's parent directory
+cd "$SCRIPT_DIR/.." || exit
+
 # Extract ION source assuming no local source
 ./scripts/extract.sh || { echo "Extract failed"; exit 1; }
 
