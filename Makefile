@@ -36,9 +36,7 @@ LIB = $(PWD)/lib
 # SPACE_ORDER of 3 specifies 64 bit systems.
 # SPACE_ORDER of 2 specifies 32 bit systems.
 # BP_EXTENDED is required enables extension blocks required for QoS.
-#   - Currently QoS is included as part of minimal set for ION-core.
-#   - QoS is not inherited from BPv6 and made availabe in BPv7 as 
-#     a non-standard prioritization method.
+
 export CFLAG = -g -Wall -DSPACE_ORDER=${ARCH} -Wall -DBP_EXTENDED -lm -pthread
 export PLATFORM = -lm -pthread
 export GCC = /usr/bin/gcc
