@@ -37,16 +37,9 @@ LIB = $(PWD)/lib
 # SPACE_ORDER of 2 specifies 32 bit systems.
 # BP_EXTENDED is required enables extension blocks required for QoS.
 #   - Currently QoS is included as part of minimal set for ION-core.
-#   - QoS is inherited from BPv6 and made availabe in BPv7 as 
+#   - QoS is not inherited from BPv6 and made availabe in BPv7 as 
 #     a non-standard prioritization method.
-
-ifeq ($(BP_EXT_OPTIONS),YES)
-CFLAGS = -g -Wall -DSPACE_ORDER=$(ARCH) -DBP_EXTENDED -lm -pthread
-else
-CFLAGS = -g -Wall -DSPACE_ORDER=$(ARCH) -lm -pthread
-endif
-
-export CFLAGS
+export CFLAG = -g -Wall -DSPACE_ORDER=${ARCH} -Wall -DBP_EXTENDED -lm -pthread
 export PLATFORM = -lm -pthread
 export GCC = /usr/bin/gcc
 
@@ -69,15 +62,6 @@ _OBJ_DIR := $(shell mkdir -p $(LIB)/obj)
 
 # Default target to build selected programs
 all: $(PROGRAMS)
-
-# If BP_EXT_OPTIONS is not set to "YES" then call a script to update
-# the noextension.c file
-ifeq ($(BP_EXT_OPTIONS),YES)
-	$(info BP_EXT_OPTIONS is set to "YES", no need to update noextension.c)
-else
-	$(info BP_EXT_OPTIONS is set to "NO", need to update noextension.c)
-	$(SCR)/clean_noex.sh
-endif
 
 # Construct .mk file paths
 MK_FILES := $(addprefix $(MDIR)/,$(addsuffix .mk,$(PROGRAMS)))

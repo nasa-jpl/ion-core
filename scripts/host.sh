@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Get the full path to the directory containing the script
-SCRIPT_DIR=$(dirname "$(realpath "$0")")
-
-# Change directory to the script's directory
-cd "$SCRIPT_DIR" || exit
-
 # Check if at least two arguments are provided
 if [ $# -lt 2 ]; then
   echo "Usage: $0 <IP1> <IP2> [udp|stcp]"

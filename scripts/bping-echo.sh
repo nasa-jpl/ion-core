@@ -22,12 +22,6 @@ if [ $# -eq 3 ]; then
     fi
 fi
 
-# Get the full path to the directory containing the script
-SCRIPT_DIR=$(dirname "$(realpath "$0")")
-
-# Change directory to the script's parent directory
-cd "$SCRIPT_DIR/../" || exit
-
 echo "create config files"
 if [[ $protocol == "ltp" ]]; then
   ./scripts/host.sh "$IP1" "$IP2"

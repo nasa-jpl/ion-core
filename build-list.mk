@@ -12,13 +12,6 @@ ARCH = 3
 #ARCH = 2
 
 #
-# BP Extension Options
-#
-# YES: to include at least one BP Extension
-# NO: to exclude all BP Extensions
-BP_EXT_OPTIONS = YES
-
-#
 # PART I: Mandatory Features (do not edit)
 #
 # ICI
