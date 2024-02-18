@@ -2,6 +2,7 @@
 
 - [ION-Core for Linux (and WSL)](#ion-core-for-linux-and-wsl)
   - [Build \& Install](#build--install)
+  - [Selecting ION-core Features to Build](#selecting-ion-core-features-to-build)
   - [Man Page Installation](#man-page-installation)
   - [Creating ION configuration (".rc") files for a two-node setup](#creating-ion-configuration-rc-files-for-a-two-node-setup)
   - [Automated Script to Build, Install, and Test Ion-core on Two Hosts](#automated-script-to-build-install-and-test-ion-core-on-two-hosts)
@@ -10,12 +11,9 @@
   - [Building Static Linking Library](#building-static-linking-library)
   - [Contributing Code](#contributing-code)
   - [WSL2 Networking Issue](#wsl2-networking-issue)
-  - [Selecting which ION-core Features to Build](#selecting-which-ion-core-features-to-build)
   - [Release Notes](#release-notes)
 
 ## Build & Install
-
-Currently ion-core only builds on 64-bit OS. Version 4.1.3 (expected in summer of 2024) will support 32-bit OS.
 
 Be sure you have the tools installed:
 ```bash
@@ -41,6 +39,18 @@ sudo make install
 
 You can also run `./scripts/extract.sh` without supplying the path to an existing ION source code folder. In that case, the script will automatically download the appropriate ION open source code into a `./tmp` directory and extract the needed files into ion-core.
 
+## Selecting ION-core Features to Build
+
+You can select the features you want to include in ion-core build by updating the `build-list.mk` file. See the `build-list.mk` file for the list of features.
+
+At least one CLA must be selected. All necessary programs/daemons associated with a feature or a CLA are listed on one line, so when commenting/uncommenting features, please do so at the "line level", not the individual program.
+
+You can select build for either 32-bit or 64-bit Operating Systems.
+
+You can also select which bundle protocol extension blocks to include for locally sourced bundles.
+
+Save the changes to the `build-list.mk`, remove the old installation by running `make clean`, `sudo make uninstall`, and then rebuild ion-core.
+
 ## Man Page Installation
 
 Run:
@@ -55,45 +65,43 @@ For example:
 
 `./scripts/host.sh 192.168.254.192 192.168.254.194`
 
-Makes the config file host192.rc
+Makes the config file `host192.rc` and places it inside the folder `host192_testdir`. You can run lauch ION by cd into the directory `cd host192_testdir` and run `ionstart -I host192.rc`.
 
-`ionstart -I host192.rc`
+For the other host, run the same command with the order of IP addresses reversed.
 
-Now we can use it to launch ION on this host with an IP address of 192.168.254.192 and an IPN node number of 192. For the other host, run the same command with the order of IP addresses reversed.
+The default protocol stack is BP/LTP but you can select the UDP or STCP CLAs if they are included in the `build-list.mk`.
 
-The default protocol stack is BP/LTP. 
-
-To generate configuration files using UDP or the STCP CLA, add either `udp` or `stcp` as the third argument to `host.sh`. For example to generate configuration using STCP, run 
+To generate configuration files using either UDP or the STCP CLA, add either `udp` or `stcp` as the third argument to `host.sh`. For example,  to generate configuration using STCP, run 
 
 `./scripts/host.sh 192.168.254.192 192.168.254.194` stcp
 
 Similar syntax goes for udp.
 
-To use other convergence layer such as UDP or STCP, you will need to modify the .rc files. See the ION documentation for more information. For example, you may consult the [ION Configuration Tutorials and Configuration Templates.](https://nasa-jpl.github.io/ION-DTN/Basic-Configuration-File-Tutorial/)
+To use other convergence layers such as UDP or STCP, you will need to modify the .rc files. See the ION documentation for more information. For example, you may consult the [ION Configuration Tutorials and Configuration Templates.](https://nasa-jpl.github.io/ION-DTN/Basic-Configuration-File-Tutorial/)
 
 ## Automated Script to Build, Install, and Test Ion-core on Two Hosts
 
-To streamline the process, we have created a two scripts that automates the build, installation, and testing of ion-core.
+To streamline the process, we have created two bash scripts that can automate the build, installation, and testing of ion-core.
 
 To build and install ion-core, run:
 
 `./scripts/build-install.sh`
 
 To run a bping test between two nodes. On host A, run
-`./scripts/bping-send.sh <IP Address of Host A> <IP Address of the Host B>`
+`./scripts/bping-send.sh <IP Address of Host A> <IP Address of the Host B> <opt: udp or stcp>`
 
 On host B, run
 
-`./scripts/bping-echo.sh <IP Address of Host B> <IP Address of the Host A>`
+`./scripts/bping-echo.sh <IP Address of Host B> <IP Address of the Host A> <opt: udp or stcp>`
 
 Note:
 * This script will automatically create the ION configuration files needed and launch a `bping` test using BP and LTP CLA.
-* To ensure that all bping message will be received by the peer DTN node, it is recommended that you run bping-echo on second host first, and then run bping-send on the first host.
-* Both bping-send.sh and bping-echo.sh takes an optional 3rd argument to specify either the udp or stcp CLAs. But they must be the same on both host to ensure compatibility.
+* To ensure that all bping messages will be received by the peer DTN node, it is recommended that you run bping-echo on the second host first, and then run bping-send on the first host.
+* Both `bping-send.sh` and `bping-echo.sh` takes an optional 3rd argument to specify either the `udp` or `stcp` CLAs. But they must be the same on both hosts to ensure compatibility.
 
 ## Adjusting Pre-Allocation of Memory/Storage Space for ION
 
-ION is designed to run within a pre-allocated memory space. If, while running ION, you encounter errors due to lack of working memory or SDR heap space, you can increase the pre-allocated allocation by modifying the `host.ionconfig` file and then regenerate configuration files using the `./scripts/host.sh` command. The current default ION SDR and working memory allocation is as follows:
+ION is designed to run within a pre-allocated memory space. If, while running ION, you encounter errors due to a lack of working memory or SDR heap space, you can increase the pre-allocated allocation by modifying the `host.ionconfig` file and then regenerate configuration files using the `./scripts/host.sh` command. The current default ION SDR and working memory allocation is as follows:
 
 ```
 configFlags 1
@@ -138,15 +146,7 @@ Alternative approach is to use the WSL Vpnkit to provide VPN connection:
 
 https://github.com/sakai135/wsl-vpnkit
 
-## Selecting which ION-core Features to Build
 
-You can select the feature you want to build for ion-core by updating the `build-list.mk` file. All available, optional features are listed. 
-
-At least one CLA must be selected. 
-
-All necessary programs/daemons associated with a feature or a CLA is listed on one line, so when commenting/uncommenting features, please do so at the "line level", not the individual program.
-
-Save the changes to the `build-list.mk`, and then remove the old installation by running `make clean`, `sudo make uninstall`, and then rebuild ion-core to install the new set of features.
 
 --------------------------
 

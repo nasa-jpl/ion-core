@@ -1,4 +1,34 @@
 #!/bin/bash
+
+# Display Help Menu
+function display_help() {
+    echo "Usage: $0 [source_path]"
+    echo
+    echo "This script automates the setup for ION-Core by downloading the specified version,"
+    echo "extracting it, and preparing the environment for compilation."
+    echo
+    echo "Arguments:"
+    echo "  source_path    Optional. The path to download and extract the ION-Core source."
+    echo "                 If not provided, './tmp/ion-open-source-<version>' will be used."
+    echo
+    echo "Example:"
+    echo "  $0              # Uses default path"
+    echo "  $0 custom/path  # Uses 'custom/path' for the operation"
+    exit 1
+}
+
+# Check for help argument
+if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+    display_help
+fi
+
+# Get the full path of the script's directory
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+
+# change to the script's parent directory
+cd "$SCRIPT_DIR/.."
+
+# Set the default source
 ION_VER="4.1.2"
 ION_SRC_URL="https://sourceforge.net/projects/ion-dtn/files/ion-open-source-$ION_VER.tar.gz"
 SOURCE_PATH=$1
@@ -380,6 +410,10 @@ while [ "x${MANPAGE[count]}" != "x" ]
 		fi
 	count=$(( $count + 1 ))
 done
+
+# Replace the bpextensions.c file with the ION-core customized version.
+# with compiler switches
+cp $SCRIPT_DIR/bpextensions-ion-core.c ./$INC/bpextensions.c
 
 # Clean up the inc/noextensions.c file here.
 # The compiler produces "warning: excess elements in scalar initializer"

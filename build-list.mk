@@ -12,6 +12,20 @@ ARCH = 3
 #ARCH = 2
 
 #
+# FLAGS for Extension for Locally Sourced Bundles
+#
+# PBN_EXT : Previous Node Extension Block
+# BPQ_EXT : Bundle Protocol QoS Extension Block
+# BAE_EXT : Bundle Age Extension Block
+# SNW_EXT : Spray and Wait Permit Extension Block
+# IMC_EXT : IMC Multicast Extension Block
+#EXT_FLAGS = -DPNB_EXT 
+EXT_FLAGS += -DBPQ_EXT 
+#EXT_FLAGS += -DBAE_EXT 
+#EXT_FLAGS += -DSNW_EXT 
+EXT_FLAGS += -DIMC_EXT
+
+#
 # PART I: Mandatory Features (do not edit)
 #
 # ICI

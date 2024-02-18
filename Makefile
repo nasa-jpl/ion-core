@@ -37,7 +37,7 @@ LIB = $(PWD)/lib
 # SPACE_ORDER of 2 specifies 32 bit systems.
 # BP_EXTENDED is required enables extension blocks required for QoS.
 
-export CFLAG = -g -Wall -DSPACE_ORDER=${ARCH} -Wall -DBP_EXTENDED -lm -pthread
+export CFLAG = -g -Wall -DSPACE_ORDER=${ARCH} -DBP_EXTENDED ${EXT_FLAGS} -lm -pthread
 export PLATFORM = -lm -pthread
 export GCC = /usr/bin/gcc
 
