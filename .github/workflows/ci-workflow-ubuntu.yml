@@ -37,6 +37,10 @@ jobs:
 
       - name: Run build and tests, capture stdout
         run: | # Redirect stdout and stderr to a log
+          # -e aborts on the first failing command; pipefail makes the exit code
+          # propagate through the `| tee` below so build/test failures fail the step
+          # instead of being masked by tee's exit 0.
+          set -eo pipefail
           {
             echo "Starting build and tests at $(date)"
             make clean
