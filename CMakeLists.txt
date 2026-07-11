@@ -14,7 +14,7 @@ if(EXISTS "${ION_DTN_VERSION_FILE}")
   # Extract version number (e.g., "ion-open-source-4.1.4-b.2" -> "4.1.4")
   string(REGEX REPLACE "^ion-open-source-([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" PROJECT_VERSION "${ION_DTN_TAG}")
 else()
-  set(PROJECT_VERSION "4.1.4")
+  set(PROJECT_VERSION "4.2.0")
   message(WARNING "ION_DTN_VERSION file not found, using default version ${PROJECT_VERSION}")
 endif()
 
@@ -155,6 +155,7 @@ set(ICI_SOURCES
   ${SRC_DIR}/ici/library/sptrace.c
   ${SRC_DIR}/ici/library/crc.c
   ${SRC_DIR}/ici/library/ion.c
+  ${SRC_DIR}/ici/library/ion_atomic.c
   ${SRC_DIR}/ici/library/lyst.c
   ${SRC_DIR}/ici/library/platform.c
   ${SRC_DIR}/ici/sdr/sdrlist.c
@@ -250,6 +251,7 @@ set(BP_SOURCES
   ${SRC_DIR}/bpv7/bpsec/sci/bib_hmac_sha2_sc.c
   ${SRC_DIR}/bpv7/bpsec/sci/ion_test_sc.c
   ${SRC_DIR}/bpv7/ipn/libipnfw.c
+  ${SRC_DIR}/bpv7/ipn/cbdedup.c
   ${SRC_DIR}/bpv7/bpsec/sci/sci_valmap.c
   ${SRC_DIR}/bpv7/library/ext/bpq/bpq.c
   ${SRC_DIR}/bpv7/stcp/libstcpcla.c
@@ -290,7 +292,8 @@ set(BP_EXECUTABLES
   bpstats
   bptrace
   bptracker
-  bptransit 
+  bpwatch
+  bptransit
   ipnadmin 
   ipnadminep 
   ipnfw 

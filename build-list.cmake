@@ -65,9 +65,9 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   endif()
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(OS_FLAGS "-Dunix -Ddarwin -DSPACE_ORDER=3") # -m64 is handled by CMAKE_C_FLAGS
+    set(OS_FLAGS "-D__unix__ -Dunix -Ddarwin -DSPACE_ORDER=3") # -m64 is handled by CMAKE_C_FLAGS
   else()
-    set(OS_FLAGS "-Dunix -Ddarwin -DSPACE_ORDER=2") # -m32 is handled by CMAKE_C_FLAGS
+    set(OS_FLAGS "-D__unix__ -Dunix -Ddarwin -DSPACE_ORDER=2") # -m32 is handled by CMAKE_C_FLAGS
   endif()
 elseif(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -101,6 +101,11 @@ set(EXT_FLAGS "")
 # However, to strictly mimic, we'll collect the flags here.
 
 # As per your build-list.mk, BPQ_EXT and IMC_EXT are enabled by default.
+# ENABLE_IMC (added in ION 4.2.0): gates the IMC handler table in bpextensions.c
+# and the IMC forwarding path in libbpP.c. It replaced the unconditional IMC
+# inclusion of 4.1.x; without it the IMC block handlers are compiled but never
+# registered, silently disabling multicast. IMC_EXT still gates the auto-attach
+# extensionSpecs entry, so both are set.
 # If you wish to make them configurable by the user, you'd use `option()` in CMakeLists.txt
 # and check if they are ON.
 # For direct translation, we'll append to EXT_FLAGS string.
@@ -110,7 +115,7 @@ set(EXT_FLAGS "")
 # a very specific concatenation logic.
 # For the purpose of *this* build-list.cmake, we'll define it as a string
 # that *could* be passed to add_definitions later.
-set(EXT_FLAGS "-DBPQ_EXT -DIMC_EXT") # Matches your Makefile: EXT_FLAGS += -DBPQ_EXT EXT_FLAGS += -DIMC_EXT
+set(EXT_FLAGS "-DBPQ_EXT -DIMC_EXT -DENABLE_IMC") # Matches your Makefile: EXT_FLAGS += -DBPQ_EXT -DIMC_EXT -DENABLE_IMC
 
 
 ##################
@@ -158,6 +163,7 @@ list(APPEND PROGRAMS
   bpinspect
   cbrcustodytest
   bptracker
+  bpwatch
 
   # Load-and-Go Command
   lgagent

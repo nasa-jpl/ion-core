@@ -6,6 +6,7 @@ LIBBP_INCLUDED = YES
 SRC_libbp := $(SRC_BPV7)/libbp.c \
 	$(SRC_BPV7)/libbpP.c \
 	$(SRC_BPV7)/libipnfw.c \
+	$(SRC_BPV7)/cbdedup.c \
 	$(SRC_BPV7)/bei.c \
 	$(SRC_BPV7)/bcb.c \
 	$(SRC_BPV7)/bib.c \

@@ -11,6 +11,7 @@ SRC_libici := \
 	$(SRC_ICI)/sdrlist.c \
 	$(SRC_ICI)/sdrcatlg.c \
 	$(SRC_ICI)/ion.c \
+	$(SRC_ICI)/ion_atomic.c \
 	$(SRC_ICI)/ion_network.c \
 	$(SRC_ICI)/smrbt.c \
 	$(SRC_ICI)/sdrmgt.c \

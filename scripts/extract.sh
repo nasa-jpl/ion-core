@@ -170,6 +170,7 @@ SOURCES=(
   "$SOURCE_PATH/bpv7/daemon/bpclock.c:bpv7"
   "$SOURCE_PATH/bpv7/daemon/bptransit.c:bpv7"
   "$SOURCE_PATH/bpv7/imc/libimcfw.c:bpv7"
+  "$SOURCE_PATH/bpv7/ipn/cbdedup.c:bpv7"
   "$SOURCE_PATH/bpv7/ipn/ipnadmin.c:bpv7"
   "$SOURCE_PATH/bpv7/ipn/ipnadminep.c:bpv7"
   "$SOURCE_PATH/bpv7/ipn/ipnfw.c:bpv7"
@@ -218,6 +219,7 @@ SOURCES=(
   "$SOURCE_PATH/bpv7/utils/bpsendfile.c:bpv7"
   "$SOURCE_PATH/bpv7/utils/bpstats.c:bpv7"
   "$SOURCE_PATH/bpv7/utils/bptrace.c:bpv7"
+  "$SOURCE_PATH/bpv7/utils/bpwatch.c:bpv7"
   "$SOURCE_PATH/bpv7/utils/bptracker.c:bpv7"
   "$SOURCE_PATH/bpv7/utils/lgagent.c:bpv7"
   "$SOURCE_PATH/bpv7/utils/lgsend.c:bpv7"
@@ -236,6 +238,7 @@ SOURCES=(
   "$SOURCE_PATH/ici/library/cbor.c:ici"
   "$SOURCE_PATH/ici/library/crc.c:ici"
   "$SOURCE_PATH/ici/library/ion.c:ici"
+  "$SOURCE_PATH/ici/library/ion_atomic.c:ici"
   "$SOURCE_PATH/ici/library/ion_network.c:ici"
   "$SOURCE_PATH/ici/library/ionsec.c:ici"
   "$SOURCE_PATH/ici/library/lyst.c:ici"
@@ -300,6 +303,7 @@ HEADERS=(
   "$SOURCE_PATH/bpv7/bpsec/utils/bpsec_util.h:bpv7"
   "$SOURCE_PATH/bpv7/dtn2/dtn2fw.h:bpv7"
   "$SOURCE_PATH/bpv7/imc/imcfw.h:bpv7"
+  "$SOURCE_PATH/bpv7/ipn/cbdedup.h:bpv7"
   "$SOURCE_PATH/bpv7/include/bp.h:bpv7"
   "$SOURCE_PATH/bpv7/include/bp_admin.h:bpv7"
   "$SOURCE_PATH/bpv7/include/eureka.h:bpv7"
@@ -342,6 +346,7 @@ HEADERS=(
   "$SOURCE_PATH/ici/include/crypto.h:ici"
   "$SOURCE_PATH/ici/include/csi.h:ici"
   "$SOURCE_PATH/ici/include/ion.h:ici"
+  "$SOURCE_PATH/ici/include/ion_atomic.h:ici"
   "$SOURCE_PATH/ici/include/ion_network.h:ici"
   "$SOURCE_PATH/ici/include/ionsec.h:ici"
   "$SOURCE_PATH/ici/include/lyst.h:ici"
@@ -363,6 +368,7 @@ HEADERS=(
   "$SOURCE_PATH/ici/include/sptrace.h:ici"
   "$SOURCE_PATH/ici/include/zco.h:ici"
   "$SOURCE_PATH/ici/library/lystP.h:ici"
+  "$SOURCE_PATH/ici/library/platform_smP.h:ici"
   "$SOURCE_PATH/ici/library/radixP.h:ici"
   "$SOURCE_PATH/ici/sdr/sdrP.h:ici"
   "$SOURCE_PATH/ltp/include/ltp.h:ltp"
@@ -440,9 +446,10 @@ MANPAGE=(
 
 TEST_SCRIPTS=(
   "$SOURCE_PATH/tests/runtests"
+  "$SOURCE_PATH/tests/test_utils.sh"
   "$SOURCE_PATH/tests/cleanup"
   "$SOURCE_PATH/tests/setacs.sh"
-  "$SOURCE_PATH/tests/pretest-script"
+  "$SOURCE_PATH/tests/pretest-script.sh"
 )
 
 TEST_DIRS=(

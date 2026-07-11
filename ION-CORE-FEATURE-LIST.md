@@ -1,8 +1,8 @@
 # ION Core Feature List
 
-**ION Core Version:** 4.1.4
-**Last Update:** 2026-04-29
-**Based on:** ION-DTN `ion-open-source-4.1.4`
+**ION Core Version:** 4.2.0-b
+**Last Update:** 2026-07-10
+**Based on:** ION-DTN `ion-open-source-4.2.0-b`
 
 This document lists the features and components included in this release of ION Core, organized by category. Only features that are actually built and installed are listed; planned and unsupported items have been removed.
 
@@ -56,7 +56,7 @@ This document lists the features and components included in this release of ION 
 | Block | Default | Description |
 |-------|---------|-------------|
 | BPQ (Quality of Service) | enabled | Bundle priority extension; built into bundles produced locally (`BPQ_EXT`) |
-| IMC (Multicast) | enabled | Interplanetary Multicast extension |
+| IMC (Multicast) | enabled | Interplanetary Multicast extension (`IMC_EXT` + `ENABLE_IMC`; the `ENABLE_IMC` gate is new in 4.2.0) |
 | MEB (Metadata) | always on | Metadata extension; processed for received bundles |
 | HCB (Hop Count) | always on | Hop-count extension; processed for received bundles |
 | BIB (Bundle Integrity) | always on | BPSec integrity block; processed for received bundles |
@@ -66,6 +66,8 @@ This document lists the features and components included in this release of ION 
 | SNW (Spray and Wait) | optional | Enable via `EXT_FLAGS` in `build-list.mk` |
 | CTEB (Custody Transfer) | always on | Custody-transfer extension block (see [Custody Transfer & CRS](#custody-transfer--compressed-bundle-reporting)) |
 | CREB (Compressed Reporting) | always on | Compressed-reporting extension block (see [Custody Transfer & CRS](#custody-transfer--compressed-bundle-reporting)) |
+
+> **BSL (BPSec Library):** ION 4.2.0 introduces a new BPSec Library subsystem (`bpv7/bsl/`), built only when `USING_BSL=1`. ION-Core keeps `USING_BSL=0` and does **not** bundle BSL in this release; BSL support is planned for a release after ION-Core 4.2.1. BIB/BCB integrity and confidentiality blocks continue to be processed via ION's native BPSec path.
 
 ## Custody Transfer & Compressed Bundle Reporting
 
@@ -157,6 +159,7 @@ At least one CLA must be selected at build time.
 | `bpdriver` | Bundle traffic driver for performance testing |
 | `bpinspect` | Inspect bundles in the local SDR with filter / output options |
 | `bptracker` | Track bundle status reports |
+| `bpwatch` | Bundle-level watch/monitor utility (new in 4.2.0) |
 | `ionwatch` | ION daemon status monitor (ICI, BP, LTP, optional CFDP/DTPC/BSSP) |
 | `ltpwatch` | LTP session status monitor (export / import sessions) |
 | `ltpstats` | Snapshot LTP statistics to `ion.log` |

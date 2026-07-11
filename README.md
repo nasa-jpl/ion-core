@@ -32,7 +32,8 @@
 - [Contributing Code](#contributing-code)
 - [WSL2 Networking Issue](#wsl2-networking-issue)
 - [Release Notes](#release-notes)
-  - [Latest Release Tag: `4.1.4`](#latest-release-tag-414)
+  - [Latest Release Tag: `4.2.0-b`](#latest-release-tag-420-b)
+  - [Tag: `4.1.4`](#tag-414)
   - [Tag: `4.1.3s`](#tag-413s)
   - [Tag: `4.1.3s-a.1`](#tag-413s-a1)
   - [Tag: `4.1.3`](#tag-413)
@@ -44,7 +45,7 @@
 
 Ion-core assumes the typical Linux OS installation location for `make` and `gcc`.
 
-Each ion-core version is designed to work with the corresponding version of ION Open Source release, e.g., ion-core 4.1.4 uses the ION open-source release version 4.1.4 as its sources.
+Each ion-core version is designed to work with the corresponding version of ION Open Source release, e.g., ion-core 4.2.0-b uses the ION open-source release version 4.2.0-b as its sources.
 
 **For CMake builds (Method 1):**
 - **Default:** Uses ION source code from the git submodule at `external/ION-DTN` (preserves full commit history)
@@ -136,7 +137,7 @@ Get ion-core and build:
 ```bash
 git clone https://github.com/nasa-jpl/ion-core-dev.git
 cd ion-core-dev
-git checkout tags/4.1.4
+git checkout tags/4.2.0-b
 # clean out previous build
 make clean
 sudo make uninstall
@@ -680,7 +681,24 @@ https://github.com/sakai135/wsl-vpnkit
 
 # Release Notes
 
-## Latest Release Tag: `4.1.4`
+## Latest Release Tag: `4.2.0-b`
+
+7/10/2026
+Update codebase to ION open source version 4.2.0-b (`ion-open-source-4.2.0-b`).
+
+* Submodule pinned to ION-DTN tag `ion-open-source-4.2.0-b` (see `ION_DTN_VERSION`).
+* Mandatory new upstream dependencies wired into both build methods:
+  * `ici/library/ion_atomic.c` + `ici/include/ion_atomic.h` — new atomics helpers now pulled in unconditionally by `ion.h` (batched-statistics support).
+  * `bpv7/ipn/cbdedup.c` + `cbdedup.h` — critical-bundle forward de-duplication now called by `ipnfw.c`.
+  * `ici/library/platform_smP.h` — new private header included by `libbpP.c`, `libcfdpP.c`, `libltpP.c`, and `rfx.c`.
+* New BP utility `bpwatch` (from `bpv7/utils/`) is built and installed.
+* `-DENABLE_IMC` added to `EXT_FLAGS` in both build lists: 4.2.0 gates the IMC handler table (in `bpextensions.c`) and the IMC forwarding path (in `libbpP.c`) on `ENABLE_IMC`, which replaced 4.1.x's unconditional IMC. Without it the IMC sources compile but never register, silently disabling multicast.
+* Darwin build flags now pass `-D__unix__`: 4.2.0 gates the "All UNIX platforms" block in `platform.h` on `__unix__` (4.1.x used bare `unix`); Apple clang predefines neither, so Darwin must supply it explicitly. Matches ION's `configure.ac`.
+* Test harness fixes for 4.2.0: `extract.sh` now links the new `tests/test_utils.sh` (sourced by `runtests`) and the renamed `tests/pretest-script.sh` (was `pretest-script`; it exports `CONFIGSROOT`, without which canned-config tests such as `bping` cannot start their node).
+* BSL (BPSec Library, new `bpv7/bsl/`) is intentionally **not** bundled; `USING_BSL` stays `0`. BSL support is planned for a release after ION-Core 4.2.1.
+* Verified: both build methods build clean on 64-bit Linux and macOS (arm64). Regression/bench set on Linux: `custody-simple`, `crs-simple`, `bping`, `bptrace_terminal_test`, `issue-352-bpcp-ltp`, `issue-352-bpcp-stcp`, `bench-cfdp`, `bench-stcp` all pass; `bench-ltp` skips unless the kernel UDP buffers are tuned (`net.core.rmem_max >= 4 MB`).
+
+## Tag: `4.1.4`
 
 4/29/2026
 Update codebase to ION open source version 4.1.4 (`ion-open-source-4.1.4`).

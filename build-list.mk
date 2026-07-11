@@ -48,11 +48,15 @@ ifeq ($(UNAME_S), Linux)
   endif
 endif
 
+# ION 4.2.0 gates the "All UNIX platforms" block in platform.h on __unix__
+# (4.1.x used bare `unix`). Apple clang predefines neither, so Darwin must pass
+# -D__unix__ explicitly (Linux/FreeBSD compilers predefine it). Matches the
+# darwin AM_CFLAGS in ION's configure.ac.
 ifeq ($(UNAME_S), Darwin)
   ifeq ($(LONGBIT), 64)
-    OS_FLAGS := -Dunix -Ddarwin -DSPACE_ORDER=3 -m64
+    OS_FLAGS := -D__unix__ -Dunix -Ddarwin -DSPACE_ORDER=3 -m64
   else
-    OS_FLAGS := -Dunix -Ddarwin -DSPACE_ORDER=2 -m32
+    OS_FLAGS := -D__unix__ -Dunix -Ddarwin -DSPACE_ORDER=2 -m32
   endif
 endif
 
@@ -77,11 +81,16 @@ $(info OS_FLAGS set to: $(OS_FLAGS))
 # SNW_EXT : Spray and Wait Permit Extension Block
 # IMC_EXT : IMC Multicast Extension Block
 
-#EXT_FLAGS = -DPNB_EXT 
-EXT_FLAGS += -DBPQ_EXT 
-#EXT_FLAGS += -DBAE_EXT 
-#EXT_FLAGS += -DSNW_EXT 
+#EXT_FLAGS = -DPNB_EXT
+EXT_FLAGS += -DBPQ_EXT
+#EXT_FLAGS += -DBAE_EXT
+#EXT_FLAGS += -DSNW_EXT
 EXT_FLAGS += -DIMC_EXT
+# ENABLE_IMC (new in ION 4.2.0) gates the IMC handler table in bpextensions.c and
+# the IMC forwarding path in libbpP.c; it replaced 4.1.x's unconditional IMC.
+# Without it the IMC sources compile but the block handlers never register,
+# silently disabling multicast. IMC_EXT still gates the auto-attach spec entry.
+EXT_FLAGS += -DENABLE_IMC
 
 ##################
 
@@ -110,7 +119,7 @@ PROGRAMS += psmwatch sdrwatch ionwatch
 
 ## BPv7 utilities
 # bpversion removed in ION 4.1.4 stable
-PROGRAMS += bpinspect bptracker
+PROGRAMS += bpinspect bptracker bpwatch
 PROGRAMS += cbrcustodytest
 
 ## Load-and-Go Command
