@@ -1,0 +1,79 @@
+name: Publish integration to public ion-core
+
+# Mirror new commits on the integration branch -- and any release tags that
+# point at those commits -- to the public-facing nasa-jpl/ion-core repository.
+#
+# Auth: this pushes to a DIFFERENT repository than the one running the workflow,
+# so the default GITHUB_TOKEN is not sufficient (it is scoped to ion-core-dev).
+# Authentication uses an SSH deploy key that is dedicated to nasa-jpl/ion-core:
+#
+#   1. Generate a dedicated key pair (no passphrase):
+#        ssh-keygen -t ed25519 -N '' -C 'ion-core-dev publish' -f ion_core_deploy
+#   2. On nasa-jpl/ion-core:  Settings -> Deploy keys -> Add deploy key
+#        paste ion_core_deploy.pub  and CHECK "Allow write access".
+#   3. On nasa-jpl/ion-core-dev: Settings -> Secrets and variables -> Actions
+#        add a secret PUBLIC_ION_CORE_DEPLOY_KEY = the PRIVATE key (ion_core_deploy).
+#
+# A deploy key is scoped to this one repository and is not tied to a user
+# account, unlike a personal access token.
+
+on:
+  push:
+    branches:
+      - integration
+    tags:
+      - '**'
+
+  workflow_dispatch:
+
+# Serialize runs so two overlapping pushes cannot race each other to the
+# public repo (a later, larger push must not be overtaken by an earlier one).
+concurrency:
+  group: publish-public-ion-core
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout integration with full history and tags
+        uses: actions/checkout@v4
+        with:
+          ref: integration
+          fetch-depth: 0             # full history -> clean fast-forward on the public repo
+          fetch-tags: true           # bring all tags so reachable ones can be mirrored
+          persist-credentials: false # drop the origin GITHUB_TOKEN extraheader; it cannot push to ion-core
+
+      - name: Configure SSH deploy key for nasa-jpl/ion-core
+        env:
+          DEPLOY_KEY: ${{ secrets.PUBLIC_ION_CORE_DEPLOY_KEY }}
+        run: |
+          set -eo pipefail
+          if [ -z "${DEPLOY_KEY}" ]; then
+            echo "::error::Secret PUBLIC_ION_CORE_DEPLOY_KEY is not set; cannot push to nasa-jpl/ion-core."
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${DEPLOY_KEY}" > ~/.ssh/ion_core_deploy
+          chmod 600 ~/.ssh/ion_core_deploy
+          # Pin GitHub's SSH host keys (trust-on-first-use via keyscan) so the
+          # push does not prompt or fail host verification on the runner.
+          ssh-keyscan -t rsa,ecdsa,ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Fast-forward push integration + reachable tags to nasa-jpl/ion-core
+        env:
+          # IdentitiesOnly=yes: use ONLY this key, ignore any agent/default keys.
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/ion_core_deploy -o IdentitiesOnly=yes"
+        run: |
+          set -eo pipefail
+          # Fast-forward-only by design: git push refuses a non-fast-forward branch
+          # update without --force, so a diverged public integration branch fails
+          # loudly here instead of being clobbered. --follow-tags additionally
+          # pushes annotated tags reachable from this commit that the public repo
+          # does not yet have (e.g. a freshly created release tag), and will NOT
+          # force-move a tag that already exists there -- deliberately moving a
+          # published tag stays a manual, reviewed action.
+          git push --follow-tags git@github.com:nasa-jpl/ion-core.git HEAD:refs/heads/integration
+
+          echo "Synced integration ($(git rev-parse --short HEAD)) and reachable tags to nasa-jpl/ion-core"
