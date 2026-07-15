@@ -83,6 +83,45 @@ math(EXPR BITS "${CMAKE_SIZEOF_VOID_P} * 8")
 message(STATUS "OS: ${BITS}-bit ${CMAKE_SYSTEM_NAME}; HW ARCH: ${CMAKE_SYSTEM_PROCESSOR}")
 message(STATUS "OS_FLAGS set to: ${OS_FLAGS}")
 
+# Robust process-shared mutex detection; mirrors build-list.mk. See the comment
+# there for why an ion-core build must reach the same answer as the stock ION
+# build it shares a node with.
+option(ENABLE_ROBUST_SDR_LOCK
+  "Use a robust process-shared pthread mutex for the SDR transaction lock, the PSM partition lock and the IPC semaphore table where supported"
+  ON)
+
+set(ROBUST_MUTEX_FLAG "")
+
+if(ENABLE_ROBUST_SDR_LOCK AND (CMAKE_SYSTEM_NAME STREQUAL "Linux"
+                            OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD"
+                            OR CMAKE_SYSTEM_NAME STREQUAL "SunOS"))
+  include(CheckCSourceCompiles)
+  set(CMAKE_REQUIRED_FLAGS "-pthread")
+  check_c_source_compiles("
+#define _GNU_SOURCE
+#include <pthread.h>
+int main(void)
+{
+  pthread_mutexattr_t attr;
+  pthread_mutex_t mutex;
+
+  if (pthread_mutexattr_init(&attr) != 0) return 1;
+  if (pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED) != 0) return 1;
+  if (pthread_mutexattr_setrobust(&attr, PTHREAD_MUTEX_ROBUST) != 0) return 1;
+  if (pthread_mutex_init(&mutex, &attr) != 0) return 1;
+  (void) pthread_mutex_consistent(&mutex);
+  return 0;
+}"
+    ION_ROBUST_MUTEX_SUPPORTED)
+  unset(CMAKE_REQUIRED_FLAGS)
+
+  if(ION_ROBUST_MUTEX_SUPPORTED)
+    set(ROBUST_MUTEX_FLAG "-DION_HAVE_ROBUST_MUTEX")
+  endif()
+endif()
+
+message(STATUS "ROBUST_MUTEX_FLAG set to: ${ROBUST_MUTEX_FLAG}")
+
 
 ##################
 # FLAGS for Extension for Locally Sourced Bundles

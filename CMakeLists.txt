@@ -69,6 +69,9 @@ add_definitions(${ION_CORE_FLAG})
 # Apply extension flags from build-list.cmake
 add_definitions(${EXT_FLAGS})
 
+# Apply the probed robust-mutex flag from build-list.cmake
+add_definitions(${ROBUST_MUTEX_FLAG})
+
 # Extension flags - if these were originally options, keep them as options
 # The `EXT_FLAGS` string from build-list.cmake can define the default flags.
 # If you want them to be user-configurable, you would still use `option()`

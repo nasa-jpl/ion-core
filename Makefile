@@ -49,8 +49,9 @@ LIB = $(PWD)/lib
 # BP_EXTENDED is required enables extension blocks required for QoS.
 # EXT_FLAGS is a list of individual extension blocks for locally sourced bundles
 # ION_CORE_FLAG enables conditional compilation in ION-DTN for ion-core-specific builds
+# ROBUST_MUTEX_FLAG is probed in build-list.mk; it must match the stock ION build
 
-export CFLAG = -g -Wall $(OS_FLAGS) $(VER) $(ION_CORE_FLAG) -DBP_EXTENDED ${EXT_FLAGS}
+export CFLAG = -g -Wall $(OS_FLAGS) $(VER) $(ION_CORE_FLAG) -DBP_EXTENDED ${EXT_FLAGS} $(ROBUST_MUTEX_FLAG)
 export PLATFORM = -lm -pthread
 export SHARED_FLAG = -fPIC
 export GCC = $(shell command -v gcc || echo /usr/bin/gcc)

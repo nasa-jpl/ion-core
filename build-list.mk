@@ -73,6 +73,54 @@ $(info OS: $(LONGBIT)-bits $(UNAME_S); HW ARCH: $(UNAME_M))
 $(info OS_FLAGS set to: $(OS_FLAGS))
 
 ##################
+# Robust Process-Shared Mutex
+# (set automatically)
+##################
+# ION 4.2.0 uses a robust process-shared pthread mutex for the SDR transaction
+# lock, the PSM partition lock and the IPC global semaphore table when
+# ION_HAVE_ROBUST_MUTEX is defined, enabling EOWNERDEAD recovery when a process
+# dies holding one. Stock ION decides this with an autoconf probe; ion-core has
+# no configure step, so probe for it here with the same test and the same
+# platform gate (configure.ac: linux|bsd|solaris).
+#
+# The macro changes the layout of structures that live in shared memory, so an
+# ion-core build MUST reach the same answer as any stock ION build sharing the
+# node. If they disagree, the second build to attach computes a different size
+# for the global semaphore table and dies in sm_ipc_init().
+#
+# Set ENABLE_ROBUST_SDR_LOCK=no to force it off (equivalent to ION's
+# ./configure --disable-robust-sdr-lock); both builds must then agree on that.
+ENABLE_ROBUST_SDR_LOCK ?= yes
+
+ROBUST_MUTEX_CC := $(shell command -v gcc || echo /usr/bin/gcc)
+ROBUST_MUTEX_FLAG :=
+
+ifeq ($(ENABLE_ROBUST_SDR_LOCK), yes)
+  ifneq ($(filter $(UNAME_S), Linux FreeBSD SunOS),)
+    ROBUST_MUTEX_OK := $(shell printf '%s\n' \
+      '#define _GNU_SOURCE' \
+      '#include <pthread.h>' \
+      'int main(void) {' \
+      '  pthread_mutexattr_t attr;' \
+      '  pthread_mutex_t mutex;' \
+      '  if (pthread_mutexattr_init(&attr) != 0) return 1;' \
+      '  if (pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED) != 0) return 1;' \
+      '  if (pthread_mutexattr_setrobust(&attr, PTHREAD_MUTEX_ROBUST) != 0) return 1;' \
+      '  if (pthread_mutex_init(&mutex, &attr) != 0) return 1;' \
+      '  (void) pthread_mutex_consistent(&mutex);' \
+      '  return 0;' \
+      '}' \
+      | $(ROBUST_MUTEX_CC) -x c - -pthread -o /dev/null > /dev/null 2>&1 \
+      && echo yes || echo no)
+    ifeq ($(ROBUST_MUTEX_OK), yes)
+      ROBUST_MUTEX_FLAG := -DION_HAVE_ROBUST_MUTEX
+    endif
+  endif
+endif
+
+$(info ROBUST_MUTEX_FLAG set to: $(ROBUST_MUTEX_FLAG))
+
+##################
 # FLAGS for Extension for Locally Sourced Bundles
 #
 # PBN_EXT : Previous Node Extension Block
