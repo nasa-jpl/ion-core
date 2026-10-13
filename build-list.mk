@@ -139,6 +139,9 @@ EXT_FLAGS += -DIMC_EXT
 # Without it the IMC sources compile but the block handlers never register,
 # silently disabling multicast. IMC_EXT still gates the auto-attach spec entry.
 EXT_FLAGS += -DENABLE_IMC
+# ION 4.2.1: legacy SdrObject/SdrAddress type aliases (Object, Address) are
+# hidden behind --disable-legacy-aliases; the default (enabled) is mirrored here.
+EXT_FLAGS += -DION_USE_LEGACY_ALIASES
 
 ##################
 
@@ -169,6 +172,7 @@ PROGRAMS += psmwatch sdrwatch ionwatch
 # bpversion removed in ION 4.1.4 stable
 PROGRAMS += bpinspect bptracker bpwatch
 PROGRAMS += cbrcustodytest
+PROGRAMS += bprecvmeta bpsendmeta
 
 ## Load-and-Go Command
 PROGRAMS += lgagent lgsend

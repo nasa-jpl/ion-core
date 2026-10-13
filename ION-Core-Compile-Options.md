@@ -1,6 +1,6 @@
 # ION-Core Compile Options
 
-This document covers the build-time options for ION-Core 4.2.0-b. Two build paths are supported: **CMake** (recommended) and **Makefile + `extract.sh`** (legacy). Most ION-Core feature selection is done by editing the build-list files (`build-list.cmake` for CMake, `build-list.mk` for the Makefile path), not via `cmake -D`.
+This document covers the build-time options for ION-Core 4.2.1-a.1. Two build paths are supported: **CMake** (recommended) and **Makefile + `extract.sh`** (legacy). Most ION-Core feature selection is done by editing the build-list files (`build-list.cmake` for CMake, `build-list.mk` for the Makefile path), not via `cmake -D`.
 
 ## CMake Cache Options (set via `cmake -D`)
 
@@ -31,7 +31,7 @@ The ION-DTN tag the build is pinned to is **not** a CMake option — it lives in
 
 ```bash
 $ cat ION_DTN_VERSION | grep -v '^#' | head -1
-ion-open-source-4.2.0-b
+ion-open-source-4.2.1-a.1
 ```
 
 To target a different ION-DTN tag, edit `ION_DTN_VERSION`, then:
@@ -60,6 +60,10 @@ Extension blocks fall into three groups:
 | Enabled by default for outbound bundles | BPQ, IMC | `EXT_FLAGS` in `build-list.{cmake,mk}` (`-DBPQ_EXT`, `-DIMC_EXT` and, new in 4.2.0, `-DENABLE_IMC` which gates the IMC handler table and forwarding path) |
 | Optional for outbound bundles | PNB, BAE, SNW | Add `-DPNB_EXT` / `-DBAE_EXT` / `-DSNW_EXT` to `EXT_FLAGS` |
 | Always processed on receive (no toggle) | MEB, HCB, BIB, BCB, CTEB, CREB | Always compiled in |
+
+### Legacy Type Aliases (`-DION_USE_LEGACY_ALIASES`)
+
+New in 4.2.1: ION hides the legacy `Object` and `Address` type aliases (for `SdrObject` and `SdrAddress`) behind `--disable-legacy-aliases` in `configure.ac`. The default is **enabled** (aliases present). Ion-core mirrors this by adding `-DION_USE_LEGACY_ALIASES` to `EXT_FLAGS` in both `build-list.cmake` and `build-list.mk`. Remove this flag only if all downstream code has been migrated to `SdrObject`/`SdrAddress`.
 
 CTEB and CREB are new in 4.1.4 and back the Custody Transfer / Compressed Bundle Reporting feature.
 
@@ -101,5 +105,5 @@ To confirm the active ION-DTN tag:
 
 ```bash
 git -C external/ION-DTN describe --tags
-# expected: ion-open-source-4.2.0-b
+# expected: ion-open-source-4.2.1-a.1
 ```

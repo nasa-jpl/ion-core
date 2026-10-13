@@ -14,7 +14,7 @@ if(EXISTS "${ION_DTN_VERSION_FILE}")
   # Extract version number (e.g., "ion-open-source-4.1.4-b.2" -> "4.1.4")
   string(REGEX REPLACE "^ion-open-source-([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" PROJECT_VERSION "${ION_DTN_TAG}")
 else()
-  set(PROJECT_VERSION "4.2.0")
+  set(PROJECT_VERSION "4.2.1")
   message(WARNING "ION_DTN_VERSION file not found, using default version ${PROJECT_VERSION}")
 endif()
 
@@ -263,6 +263,8 @@ set(BP_SOURCES
   ${SRC_DIR}/bpv7/bpsec/sci/sc_value.c
   ${SRC_DIR}/bpv7/bpsec/utils/bpsec_asb.c
   ${SRC_DIR}/bpv7/library/ext/snw/snw.c
+  ${SRC_DIR}/bpv7/utils/bprecvmeta.c
+  ${SRC_DIR}/bpv7/utils/bpsendmeta.c
 )
 
 if(NOT BP_SOURCES)
@@ -300,8 +302,10 @@ set(BP_EXECUTABLES
   ipnadmin 
   ipnadminep 
   ipnfw 
-  lgagent 
+  lgagent
   lgsend
+  bprecvmeta
+  bpsendmeta
 )
 
 #

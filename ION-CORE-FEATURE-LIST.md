@@ -1,8 +1,8 @@
 # ION Core Feature List
 
-**ION Core Version:** 4.2.0-b
-**Last Update:** 2026-07-10
-**Based on:** ION-DTN `ion-open-source-4.2.0-b`
+**ION Core Version:** 4.2.1-a.1
+**Last Update:** 2026-10-13
+**Based on:** ION-DTN `ion-open-source-4.2.1-a.1`
 
 This document lists the features and components included in this release of ION Core, organized by category. Only features that are actually built and installed are listed; planned and unsupported items have been removed.
 
@@ -145,6 +145,8 @@ At least one CLA must be selected at build time.
 | `bpecho` | Echo responder for `bping` |
 | `bpsendfile` | Send a file as one or more bundles |
 | `bprecvfile` | Receive bundles and write payload to a file |
+| `bpsendmeta` | Send a bundle with metadata extension block (new in 4.2.1) |
+| `bprecvmeta` | Receive bundles and display metadata extension block (new in 4.2.1) |
 | `bpchat` | Interactive bundle chat |
 | `bptrace` | Send a bundle with status-report flags set |
 | `bpcancel` | Cancel a previously sent bundle |

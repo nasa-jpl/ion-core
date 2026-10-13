@@ -32,7 +32,8 @@
 - [Contributing Code](#contributing-code)
 - [WSL2 Networking Issue](#wsl2-networking-issue)
 - [Release Notes](#release-notes)
-  - [Latest Release Tag: `4.2.0-b`](#latest-release-tag-420-b)
+  - [Latest Release Tag: `4.2.1-a.1`](#latest-release-tag-421-a1)
+  - [Tag: `4.2.0-b`](#tag-420-b)
   - [Tag: `4.1.4`](#tag-414)
   - [Tag: `4.1.3s`](#tag-413s)
   - [Tag: `4.1.3s-a.1`](#tag-413s-a1)
@@ -45,7 +46,7 @@
 
 Ion-core assumes the typical Linux OS installation location for `make` and `gcc`.
 
-Each ion-core version is designed to work with the corresponding version of ION Open Source release, e.g., ion-core 4.2.0-b uses the ION open-source release version 4.2.0-b as its sources.
+Each ion-core version is designed to work with the corresponding version of ION Open Source release, e.g., ion-core 4.2.1-a.1 uses the ION open-source release version 4.2.1-a.1 as its sources.
 
 **For CMake builds (Method 1):**
 - **Default:** Uses ION source code from the git submodule at `external/ION-DTN` (preserves full commit history)
@@ -681,7 +682,30 @@ https://github.com/sakai135/wsl-vpnkit
 
 # Release Notes
 
-## Latest Release Tag: `4.2.0-b`
+## Latest Release Tag: `4.2.1-a.1`
+
+10/13/2026
+Update codebase to ION open source version 4.2.1-a.1 (`ion-open-source-4.2.1-a.1`).
+
+* Submodule pinned to ION-DTN tag `ion-open-source-4.2.1-a.1` (see `ION_DTN_VERSION`).
+* Security hardening across BP, LTP, CFDP, IPND, and BPSec (multiple remotely-triggerable OOB read/write and DoS vulnerabilities closed):
+  * Stack OOB write in BPv7 extension-block parser (over-declared block count).
+  * Stack OOB write in CFDP Proxy Put destination entity-ID parser.
+  * Heap OOB write in IPND beacon deserializer (attacker-declared element lengths).
+  * Receive-buffer overflow in CFDP `bputa`/`tcputa` on oversized inbound PDU/ADU.
+  * Signed truncation of BPv7 payload length driving negative-size memory move.
+  * OOB read in BPSec security-context value and policy-parameter display paths.
+  * OOB read of LTP extension-count field.
+  * AES-GCM authentication tag on BCB-protected payload block is now verified on decryption (tampered ciphertext was previously silently accepted).
+  * Zero-length LTP green data segment no longer aborts the LTP input task.
+* New BP utilities `bprecvmeta` and `bpsendmeta` added to both build methods and installed.
+* `-DION_USE_LEGACY_ALIASES` added to `EXT_FLAGS`: ION 4.2.1 hides the legacy `Object`/`Address` type aliases behind this flag (default on); ion-core enables it to maintain source compatibility.
+* DCCP convergence layer removed upstream; no action required (DCCP was never in ion-core's source manifests).
+* BSSP removed upstream; no action required (BSSP was never in ion-core's source manifests).
+* Status reports are now **off by default** (`m srmode none`) per RFC 9171 §5.1. Existing test configs that rely on traditional status reports (`bptrace_terminal_test`) already set `m srmode traditional`; CBR/CT tests use `m srmode compressed` and are unaffected.
+* BSL is intentionally **not** bundled; `USING_BSL` stays `0`. BSL support is planned for a release after ION-Core 4.2.1.
+
+## Tag: `4.2.0-b`
 
 7/10/2026
 Update codebase to ION open source version 4.2.0-b (`ion-open-source-4.2.0-b`).

@@ -154,7 +154,9 @@ set(EXT_FLAGS "")
 # a very specific concatenation logic.
 # For the purpose of *this* build-list.cmake, we'll define it as a string
 # that *could* be passed to add_definitions later.
-set(EXT_FLAGS "-DBPQ_EXT -DIMC_EXT -DENABLE_IMC") # Matches your Makefile: EXT_FLAGS += -DBPQ_EXT -DIMC_EXT -DENABLE_IMC
+# ION 4.2.1: legacy SdrObject/SdrAddress type aliases (Object, Address) are
+# hidden behind --disable-legacy-aliases; the default (enabled) is mirrored here.
+set(EXT_FLAGS "-DBPQ_EXT -DIMC_EXT -DENABLE_IMC -DION_USE_LEGACY_ALIASES")
 
 
 ##################
@@ -203,6 +205,8 @@ list(APPEND PROGRAMS
   cbrcustodytest
   bptracker
   bpwatch
+  bprecvmeta
+  bpsendmeta
 
   # Load-and-Go Command
   lgagent
