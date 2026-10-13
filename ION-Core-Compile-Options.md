@@ -61,6 +61,10 @@ Extension blocks fall into three groups:
 | Optional for outbound bundles | PNB, BAE, SNW | Add `-DPNB_EXT` / `-DBAE_EXT` / `-DSNW_EXT` to `EXT_FLAGS` |
 | Always processed on receive (no toggle) | MEB, HCB, BIB, BCB, CTEB, CREB | Always compiled in |
 
+### Cipher Suite Name (`-DCSI_SUITE_NAME`)
+
+New in 4.2.1: ION's `configure.ac` now uses `AC_DEFINE_UNQUOTED([CSI_SUITE_NAME], ...)` to declare the active cipher suite name (displayed by `bpadmin`). Ion-core has no configure step, so `EXT_FLAGS` in both build lists provides `-DCSI_SUITE_NAME='"NULL Suites"'` — the value that `configure.ac` selects when building without Mbed TLS (the ion-core default).
+
 ### Legacy Type Aliases (`-DION_USE_LEGACY_ALIASES`)
 
 New in 4.2.1: ION hides the legacy `Object` and `Address` type aliases (for `SdrObject` and `SdrAddress`) behind `--disable-legacy-aliases` in `configure.ac`. The default is **enabled** (aliases present). Ion-core mirrors this by adding `-DION_USE_LEGACY_ALIASES` to `EXT_FLAGS` in both `build-list.cmake` and `build-list.mk`. Remove this flag only if all downstream code has been migrated to `SdrObject`/`SdrAddress`.

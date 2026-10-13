@@ -142,6 +142,9 @@ EXT_FLAGS += -DENABLE_IMC
 # ION 4.2.1: legacy SdrObject/SdrAddress type aliases (Object, Address) are
 # hidden behind --disable-legacy-aliases; the default (enabled) is mirrored here.
 EXT_FLAGS += -DION_USE_LEGACY_ALIASES
+# ION 4.2.1: CSI_SUITE_NAME is normally set by configure.ac (AC_DEFINE_UNQUOTED).
+# ion-core uses NULL_SUITES, so we define it here to match the autoconf default.
+EXT_FLAGS += -DCSI_SUITE_NAME='"NULL Suites"'
 
 ##################
 
